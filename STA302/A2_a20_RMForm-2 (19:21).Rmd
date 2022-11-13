@@ -1,0 +1,169 @@
+---
+title: "Expected Sale Price of Detached, Single Family Homes in Toronto and Mississauga"
+author: "ER6122"
+date: "October 18 2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r, echo=F}
+# I put all the packages I use for the assignment here at the start before the rest of the code because it lags R-Studio when I re-run the same code chunk.
+
+library(tidyverse)
+
+library(wesanderson)
+
+# Loading the data 
+library(readr)
+real20 <- read_csv("real20.csv")
+
+# This is a sort of pre-section that just gets the data sorted and the 200 random sample generated for the report and analysis.
+
+set.seed(6122) #setting seed to last 4 digits of student number to work with the same sample drawn of the data
+# checked with 'typeof(real20)' results in '[1] "list"' 
+# so want to convert this into a data frame to make manipulation of the data easier later on
+real_data <- as.data.frame(real20) 
+# converting to data frame
+sample0 <- real_data[sample(nrow(real_data), 200), ] 
+# sampling 200 random values from the real20 data set
+# check with  nrow(sample0)' which gives '[1] 200' ; just double checking that it has 200 rows
+
+#ER6122
+```
+
+## I. Exploratory Data Analysis
+
+```{r, echo=F}
+set.seed(6122)
+# I used the ggplot function because it's a bit easier to add features than the normal plots
+scatter0 <- ggplot(sample0, aes(x=list,y=sold))+ 
+  geom_point(size=2, color="pink")+
+  labs(y= "Actual Sale Price in Millions of Canadian Dollars", x = "Last Listing Price in Millions of Canadian Dollars")+
+  labs(title = "Plot 1 - Actual Sale Price Against Last Listing Price (6122)")
+# I didn't forget to add my student number digits this time
+scatter0
+
+#ER6122
+```
+
+
+The majority of the data seems to follow a linear pattern judging from the scatter plot. However, there seems to be two significant points that do not follow the pattern set by the bulk of the data at approximately (86,1.4) and (9,0.2). Both points are outliers with respect to the explanatory variable (listing price) so we can classify them as leverage points. It is fair to say that these points would also be classified as influential points or 'bad' leverage points, because they would substantially change the least squares regression line. Therefore a new subset of the 200 samples will be created with these two points excluded.
+
+
+```{r, echo=FALSE}
+set.seed(6122)
+# We can see that these two points have the highest and second highest 'list' values so if we order the data by list value then the highest two should correspond to these values. We can check by seeing if they're close to the approximations I guessed.
+
+sample0_sorted = sample0[order(sample0$list),c(1,2,3,4,5)]
+# 95   95 0.672  6.7990  2577.000
+# 112 112 1.085 84.9900  4457.000
+# gives these two highest 'list' values, we can see they're close to my guesses of 86 and 9 respectively, (84.99 and 6.799). So want to remove 200th and 199th data point since sorted from smallest to largest.
+sample1 <- sample0_sorted[-c(200, 199), ] # This gives the data that will be used in the rest of the analysis
+
+
+sp_sold <- ggplot(sample1, aes(x=list,y=sold))+ 
+  geom_point(aes(color=location),size=2)+
+  labs(y="Actual Sale Price in Millions of Canadian Dollars", x = "Last Listing Price in Millions \n of Canadian Dollars")+
+  labs(title = "Plot 2 - Actual Sale Price \nAgainst Last Listing Price (6122)")+
+  scale_colour_manual(values = wes_palette(name="GrandBudapest1",n=2), name = "Location")
+  
+
+sp_taxes<-ggplot(sample1, aes(x=taxes, y=sold, )) + 
+  geom_point(aes(color=location),size=2)+
+  labs(y= "Actual Sale Price in Millions of Canadian Dollars", x = "Previous Year's Property Tax \n in Canadian Dollars")+
+  labs(title = "Plot 3 - Actual Sale Price Against \nPrevious Year's Property Tax (6122)")+
+  scale_colour_manual(values = wes_palette(name="GrandBudapest1",n=2), name = "Location")
+                             
+gridExtra::grid.arrange(sp_sold,sp_taxes,ncol=2)
+
+# You can actually get Wes Anderson movie themed color palettes for R-studio, I chose the one from Grand Budapest Hotel since it's the most famous movie
+
+#ER6122
+```
+
+
+PLOT 1
+The data at a first glance seems to possess a distinct linear relationship. However, there are two outlying points that clearly deviate from this pattern. It appears to have a closer linear fit than plot 2 most because these outlying points force the scale of the data to be zoomed out, giving the appearance that the fit is more precise linearity wise.
+
+PLOT 2
+This plot is similar to plot 1, but gives a more detailed picture of the trend between sale price and listing price since the outlying points are removed. It changes the scale so that it is matched to the bulk of the data. It also appears to follow a linear relationship closely, and upon magnifying the scale of the plot it seems there may be another outlying point at 3 million  
+
+PLOT 3
+There appears to be some sort of trend in the data as it tends to cluster in the lower left corner, then spreads out towards the upper right corner. This could indicate a weak linear relationship, however the data becomes significantly sporadic it would require further investigation to confirm this. Another possibility may be that the data is only linear up to a certain point, possibly around 10,000 in property tax before the pattern stops making sense. 
+
+The points corresponding to Mississauga properties appear to be below those of that in Toronto. This would indicate that there is a slightly different relation between the taxes in those areas and the actual sale price. This could be because of the evident difference in demand for those areas affecting property tax values, or possibly because of different property tax policies in those respective municipal areas.
+
+\pagebreak
+## II. Methods and Model
+
+Table of Significant Values from Simple Linear Regressions of Listing Price Against Actual Property Selling Price; First with both Mississauga and Toronto Properties, then Mississauga Properties Only, then Toronto Properties Only (6122)
+
+```{r, echo=F, message=F}
+set.seed(6122)
+# Started by filtering out the data so there's two more samples each with Mississauga and Toronto properties respectively.
+
+sample2 <- filter(sample1,location=="M")
+
+sample3 <- filter(sample1,location=="T")
+
+# saving each regression to it's own variable, I checked them all earlier with summary and confint but removed it so it wouldn't be printed
+
+reg1 <- lm(sample1$sold~sample1$list)
+
+reg2 <- lm(sample2$sold~sample2$list)
+
+reg3 <- lm(sample3$sold~sample3$list)
+
+# This was quite tricky, had to put all the values in the table manually, the first one was tough but after you type out the first one you can copy and paste it for the 2nd and 3rd regression
+
+# Draws on the regression values to print into the table so if the data chanegs the table should change too
+
+data1 <- c(summary(reg1)$r.squared,summary(reg1)$coefficients[1],summary(reg1)$coefficients[2],(summary(reg1)$sigma)**2,summary(reg1)$coefficients[8],confint(reg1, level=0.95)[2],confint(reg1, level=0.95)[4])
+           
+data2 <- c(summary(reg2)$r.squared,summary(reg2)$coefficients[1],summary(reg2)$coefficients[2],(summary(reg2)$sigma)**2,summary(reg2)$coefficients[8],confint(reg2, level=0.95)[2],confint(reg2, level=0.95)[4])
+
+data3 <- c(summary(reg3)$r.squared,summary(reg3)$coefficients[1],summary(reg3)$coefficients[2],(summary(reg3)$sigma)**2,summary(reg3)$coefficients[8],confint(reg3, level=0.95)[2],confint(reg3, level=0.95)[4])
+
+# created a table with all the row values and gave the columns and rows titles 
+
+table1 <- rbind(data1,data2,data3)
+colnames(table1) <- c("R-squared","Intercept","Slope","Error Term Variance","P-Value","Slope CI Lower","Slope CI Upper")
+rownames(table1) <- c("Toronto & Mississauga","Mississauga","Toronto")
+TAB <- as.table(table1) # This makes it easier to call later on
+TAB # It's not very aesthetic but it displays all the information
+
+#ER6122
+```
+
+The R-squared values are quite similar for all three regression lines with deviations only within approximately 0.03 of each other. The R-squared value is approximately 0.95 (95%) or more for all three models. This implies that all three of the regression models are good fits of the data and that the variation of the selling price values is mostly explained by the listing prices. It appears that the highest R value is for Mississauga with an R-squared value of 0.9855, then both areas at 0.9643 is second largest, then Toronto is smallest at 0.9502. This suggests that there is a slightly stronger relationship between listing and selling price in Mississauga compared to that of Toronto, but with such a slight difference this could just be due to the natural random variation in data. 
+
+One possible reason that they are so similar is because if there is a definitive reason that explains the relationship between listing price and selling price, it may not be significantly dependent on the general area of the properties; at least for two similar neighborhoods. In other words, if one were to do this same experiment in other areas they might still end up with high R-squared values because the location may be mostly independent of the trend. It may most likely be something to do with the process of price adjustment between the seller and the buyer to reach a sort of market equilibrium, which has shown to be a consistent phenomena in economic markets.
+
+A pooled two-sample t-test should not be used to determine if there is a statistically significant difference between the slopes of the simple linear models. This is because to perform this test, it is necessary for the Mississauga and Toronto samples to be normally distributed which we did not check yet.
+
+\pagebreak
+## III. Discussions and Limitations
+
+I chose the third regression model with data from Mississauga because by choosing either the Mississauga or Toronto plot but not the one with both eliminates the extra variable of location which the data could also be dependent on.
+
+```{r, echo=F}
+set.seed(6122)
+# I just used a regular plot instead of the ggplot because it was similar to the formatting in the week 5 R studio exercise
+# I did the same for the qqnorm plot
+
+par(mfrow=c(1,2))
+plot(reg2$fitted,reg2$residuals,xlab="Fitted Values",ylab="Residuals",main="Residual vs Fitted Value Plots  \n for Mississagua SLR Model (6122)", col=wes_palette(name="Moonrise3",n=1), pch=16, cex.main=1.0)
+abline(h=0, lty="dashed")
+
+qqnorm(sample2$sold, col =wes_palette(name="Darjeeling1",n=1),pch=16, main = "Normal Q-Q Plot \n for Mississagua Sale Prices (6122)" , cex.main=1.0)
+qqline(sample2$sold, col =wes_palette(name="IsleofDogs1",n=1) )
+
+#ER6122
+```
+
+
+There seems to be clear violations of the SLR assumptions that allow the model to be used. The residual versus fitted value plot seems to start clustered on the right side at a certain point, then they spread out as the fitted values increase on the right side of the plot. This pattern indicates that the residuals are not random and that there is possibly still some more information missing in our model to accurately predict the true selling price. The normal qq plot also appears to have more of an exponential shape rather than a linear one which indicates that the final selling prices are not normally distributed. Although it is common for some data to be approximately normal with slight deviation in the tails of the plot, the deviation in the tail seems too great for this to be the case.
+
+Two other potential numeric predictors could be the age of the property and distance to the nearest public transit. People tend to want to buy newer properties unless there is historic value tied to the greater age, and people tend to want to live closer to public transit. People tend to consider these things in the valuation of properties which would in turn affect sale price. These factors could be worth investigating in a multiple linear regression for sale price.
+
