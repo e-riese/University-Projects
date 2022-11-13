@@ -1,0 +1,979 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/lizzieriese/Desktop/S21/ECO375/Assignment 1/Assignment 1.0.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}20 Feb 2021, 18:19:28
+
+{com}. use "/Users/lizzieriese/Desktop/S21/ECO375/Assignment 1/Data/Assignment01_Data.dta"
+
+. twoway (scatter cases_log lagvacc_per)
+{res}
+{com}. regress cases_log lagvacc_per
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       198
+{txt}{hline 13}{c +}{hline 34}   F(1, 196)       = {res}     0.76
+{txt}       Model {c |} {res}  .93144025         1   .93144025   {txt}Prob > F        ={res}    0.3837
+{txt}    Residual {c |} {res} 239.548308       196  1.22218525   {txt}R-squared       ={res}    0.0039
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}   -0.0012
+{txt}       Total {c |} {res} 240.479749       197  1.22070938   {txt}Root MSE        =   {res} 1.1055
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}   cases_log{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 1}lagvacc_per {c |}{col 14}{res}{space 2} .0045166{col 26}{space 2} .0051737{col 37}{space 1}    0.87{col 46}{space 3}0.384{col 54}{space 4}-.0056866{col 67}{space 3} .0147198
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 7.323544{col 26}{space 2} .0818457{col 37}{space 1}   89.48{col 46}{space 3}0.000{col 54}{space 4} 7.162133{col 67}{space 3} 7.484955
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. ttest  cases_log, by (lagvacc_per) unequal
+{err}more than 2 groups found, only 2 allowed
+{txt}{search r(420), local:r(420);}
+
+{com}. ttest  cases_log, by(lagvacc_per) unequal
+{err}more than 2 groups found, only 2 allowed
+{txt}{search r(420), local:r(420);}
+
+{com}. ttest  cases_log=(lagvacc_per), unequal unpaired
+{err}( invalid name
+{txt}{search r(198), local:r(198);}
+
+{com}. ttest cases_log=0
+
+{txt}One-sample t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. Err.{col 47}Std. Dev.{col 59}[95% Conf. Interval]
+{hline 9}{c +}{hline 68}
+cases_~g {c |}{res}{col 12}    198{col 22} 7.343567{col 34} .0785188{col 46} 1.104857{col 58} 7.188722{col 70} 7.498412
+{txt}{hline 9}{c BT}{hline 68}
+    mean = mean({res}cases_log{txt})                                        t = {res} 93.5262
+{txt}Ho: mean = {res}0                                     {txt}degrees of freedom = {res}     197
+
+    {txt}Ha: mean < {res}0                 {txt}Ha: mean != {res}0                 {txt}Ha: mean > {res}0
+ {txt}Pr(T < t) = {res}1.0000         {txt}Pr(|T| > |t|) = {res}0.0000          {txt}Pr(T > t) = {res}0.0000
+
+{com}. ttest cases_log=(lagvacc_per), unequal unpaired
+{err}( invalid name
+{txt}{search r(198), local:r(198);}
+
+{com}. ttest cases_log=lagvacc_per, unequal unpaired
+
+{txt}Two-sample t test with unequal variances
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. Err.{col 47}Std. Dev.{col 59}[95% Conf. Interval]
+{hline 9}{c +}{hline 68}
+cases_~g {c |}{res}{col 12}    198{col 22} 7.343567{col 34} .0785188{col 46} 1.104857{col 58} 7.188722{col 70} 7.498412
+{txt}lagvac~r {c |}{res}{col 12}    198{col 22} 4.433254{col 34} 1.081942{col 46} 15.22428{col 58} 2.299578{col 70}  6.56693
+{txt}{hline 9}{c +}{hline 68}
+combined {c |}{res}{col 12}    396{col 22}  5.88841{col 34} .5466325{col 46} 10.87785{col 58} 4.813737{col 70} 6.963083
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 22} 2.910313{col 34} 1.084788{col 58} .7711639{col 70} 5.049463
+{txt}{hline 9}{c BT}{hline 68}
+    diff = mean({res}cases_log{txt}) - mean({res}lagvacc_per{txt})                    t = {res}  2.6828
+{txt}Ho: diff = 0                     Satterthwaite's degrees of freedom = {res} 199.075
+
+    {txt}Ha: diff < 0                 Ha: diff != 0                 Ha: diff > 0
+ Pr(T < t) = {res}0.9960         {txt}Pr(|T| > |t|) = {res}0.0079          {txt}Pr(T > t) = {res}0.0040
+
+{com}. ttest regress cases_log lagvacc_per
+{err}variable {bf}regress{sf} not found
+{txt}{search r(111), local:r(111);}
+
+{com}. rvfplot, yline=0
+{err}option {bf:yline} not allowed
+{txt}{search r(198), local:r(198);}
+
+{com}. rvfplot
+{res}
+{com}. sort dateWKbegin
+
+. twoway (scatter cases_log lagvacc_per) (scatter cases_log lagvacc_per)
+{res}
+{com}. regress cases_log lagvacc_per
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       198
+{txt}{hline 13}{c +}{hline 34}   F(1, 196)       = {res}     0.76
+{txt}       Model {c |} {res}  .93144025         1   .93144025   {txt}Prob > F        ={res}    0.3837
+{txt}    Residual {c |} {res} 239.548308       196  1.22218525   {txt}R-squared       ={res}    0.0039
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}   -0.0012
+{txt}       Total {c |} {res} 240.479749       197  1.22070938   {txt}Root MSE        =   {res} 1.1055
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}   cases_log{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 1}lagvacc_per {c |}{col 14}{res}{space 2} .0045166{col 26}{space 2} .0051737{col 37}{space 1}    0.87{col 46}{space 3}0.384{col 54}{space 4}-.0056866{col 67}{space 3} .0147198
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 7.323544{col 26}{space 2} .0818457{col 37}{space 1}   89.48{col 46}{space 3}0.000{col 54}{space 4} 7.162133{col 67}{space 3} 7.484955
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. twoway (scatter cases_log lagvacc_per) 
+{res}
+{com}. regress cases_log lagvacc_per week age
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       198
+{txt}{hline 13}{c +}{hline 34}   F(3, 194)       = {res}    40.17
+{txt}       Model {c |} {res} 92.1505913         3  30.7168638   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 148.329157       194  .764583286   {txt}R-squared       ={res}    0.3832
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.3737
+{txt}       Total {c |} {res} 240.479749       197  1.22070938   {txt}Root MSE        =   {res}  .8744
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}   cases_log{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 1}lagvacc_per {c |}{col 14}{res}{space 2} .0129525{col 26}{space 2} .0047552{col 37}{space 1}    2.72{col 46}{space 3}0.007{col 54}{space 4}  .003574{col 67}{space 3}  .022331
+{txt}{space 8}week {c |}{col 14}{res}{space 2} .0171016{col 26}{space 2} .0109977{col 37}{space 1}    1.56{col 46}{space 3}0.122{col 54}{space 4}-.0045889{col 67}{space 3} .0387921
+{txt}{space 9}age {c |}{col 14}{res}{space 2}-.2641995{col 26}{space 2}  .025123{col 37}{space 1}  -10.52{col 46}{space 3}0.000{col 54}{space 4}-.3137488{col 67}{space 3}-.2146502
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}-45.77512{col 26}{space 2} 34.80606{col 37}{space 1}   -1.32{col 46}{space 3}0.190{col 54}{space 4} -114.422{col 67}{space 3} 22.87174
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. regress cases_log lagvacc_per i.age i.week
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       198
+{txt}{hline 13}{c +}{hline 34}   F(30, 167)      = {res}   373.71
+{txt}       Model {c |} {res} 236.950247        30  7.89834158   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 3.52950134       167  .021134739   {txt}R-squared       ={res}    0.9853
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.9827
+{txt}       Total {c |} {res} 240.479749       197  1.22070938   {txt}Root MSE        =   {res} .14538
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}   cases_log{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 1}lagvacc_per {c |}{col 14}{res}{space 2}-.0057974{col 26}{space 2} .0010479{col 37}{space 1}   -5.53{col 46}{space 3}0.000{col 54}{space 4}-.0078663{col 67}{space 3}-.0037285
+{txt}{space 12} {c |}
+{space 9}age {c |}
+{space 6}15-19  {c |}{col 14}{res}{space 2}-.4400148{col 26}{space 2}  .043834{col 37}{space 1}  -10.04{col 46}{space 3}0.000{col 54}{space 4}-.5265551{col 67}{space 3}-.3534745
+{txt}{space 6}20-29  {c |}{col 14}{res}{space 2}-.0302479{col 26}{space 2} .0438458{col 37}{space 1}   -0.69{col 46}{space 3}0.491{col 54}{space 4}-.1168114{col 67}{space 3} .0563156
+{txt}{space 6}30-39  {c |}{col 14}{res}{space 2}-.3023669{col 26}{space 2} .0438638{col 37}{space 1}   -6.89{col 46}{space 3}0.000{col 54}{space 4}-.3889659{col 67}{space 3}-.2157678
+{txt}{space 6}40-49  {c |}{col 14}{res}{space 2}-.3980066{col 26}{space 2} .0439233{col 37}{space 1}   -9.06{col 46}{space 3}0.000{col 54}{space 4} -.484723{col 67}{space 3}-.3112901
+{txt}{space 6}50-59  {c |}{col 14}{res}{space 2}-.6554999{col 26}{space 2} .0440983{col 37}{space 1}  -14.86{col 46}{space 3}0.000{col 54}{space 4} -.742562{col 67}{space 3}-.5684378
+{txt}{space 6}60-69  {c |}{col 14}{res}{space 2}-1.015151{col 26}{space 2} .0447388{col 37}{space 1}  -22.69{col 46}{space 3}0.000{col 54}{space 4}-1.103478{col 67}{space 3}-.9268251
+{txt}{space 6}70-79  {c |}{col 14}{res}{space 2} -1.65868{col 26}{space 2} .0453784{col 37}{space 1}  -36.55{col 46}{space 3}0.000{col 54}{space 4}-1.748269{col 67}{space 3} -1.56909
+{txt}{space 8}80+  {c |}{col 14}{res}{space 2}-2.042018{col 26}{space 2} .0450697{col 37}{space 1}  -45.31{col 46}{space 3}0.000{col 54}{space 4}-2.130998{col 67}{space 3}-1.953038
+{txt}{space 12} {c |}
+{space 8}week {c |}
+{space 7}3155  {c |}{col 14}{res}{space 2} .3871146{col 26}{space 2} .0685318{col 37}{space 1}    5.65{col 46}{space 3}0.000{col 54}{space 4} .2518143{col 67}{space 3}  .522415
+{txt}{space 7}3156  {c |}{col 14}{res}{space 2} .6999702{col 26}{space 2} .0685318{col 37}{space 1}   10.21{col 46}{space 3}0.000{col 54}{space 4} .5646698{col 67}{space 3} .8352705
+{txt}{space 7}3157  {c |}{col 14}{res}{space 2} 1.017811{col 26}{space 2} .0685318{col 37}{space 1}   14.85{col 46}{space 3}0.000{col 54}{space 4} .8825106{col 67}{space 3} 1.153111
+{txt}{space 7}3158  {c |}{col 14}{res}{space 2} .9974344{col 26}{space 2} .0685318{col 37}{space 1}   14.55{col 46}{space 3}0.000{col 54}{space 4}  .862134{col 67}{space 3} 1.132735
+{txt}{space 7}3159  {c |}{col 14}{res}{space 2} .6502206{col 26}{space 2} .0685318{col 37}{space 1}    9.49{col 46}{space 3}0.000{col 54}{space 4} .5149202{col 67}{space 3} .7855209
+{txt}{space 7}3160  {c |}{col 14}{res}{space 2}-.1001395{col 26}{space 2} .0685318{col 37}{space 1}   -1.46{col 46}{space 3}0.146{col 54}{space 4}-.2354399{col 67}{space 3} .0351608
+{txt}{space 7}3161  {c |}{col 14}{res}{space 2}-.7260257{col 26}{space 2} .0685318{col 37}{space 1}  -10.59{col 46}{space 3}0.000{col 54}{space 4} -.861326{col 67}{space 3}-.5907253
+{txt}{space 7}3162  {c |}{col 14}{res}{space 2}-1.147822{col 26}{space 2} .0685318{col 37}{space 1}  -16.75{col 46}{space 3}0.000{col 54}{space 4}-1.283122{col 67}{space 3}-1.012522
+{txt}{space 7}3163  {c |}{col 14}{res}{space 2}-1.164281{col 26}{space 2} .0685318{col 37}{space 1}  -16.99{col 46}{space 3}0.000{col 54}{space 4}-1.299581{col 67}{space 3} -1.02898
+{txt}{space 7}3164  {c |}{col 14}{res}{space 2}-1.148024{col 26}{space 2} .0685318{col 37}{space 1}  -16.75{col 46}{space 3}0.000{col 54}{space 4}-1.283325{col 67}{space 3}-1.012724
+{txt}{space 7}3165  {c |}{col 14}{res}{space 2}-1.058696{col 26}{space 2} .0685318{col 37}{space 1}  -15.45{col 46}{space 3}0.000{col 54}{space 4}-1.193996{col 67}{space 3}-.9233953
+{txt}{space 7}3166  {c |}{col 14}{res}{space 2}-.8599854{col 26}{space 2} .0685318{col 37}{space 1}  -12.55{col 46}{space 3}0.000{col 54}{space 4}-.9952858{col 67}{space 3} -.724685
+{txt}{space 7}3167  {c |}{col 14}{res}{space 2}-.4608992{col 26}{space 2} .0685318{col 37}{space 1}   -6.73{col 46}{space 3}0.000{col 54}{space 4}-.5961996{col 67}{space 3}-.3255989
+{txt}{space 7}3168  {c |}{col 14}{res}{space 2}-.1961716{col 26}{space 2} .0685318{col 37}{space 1}   -2.86{col 46}{space 3}0.005{col 54}{space 4} -.331472{col 67}{space 3}-.0608712
+{txt}{space 7}3169  {c |}{col 14}{res}{space 2} .1670387{col 26}{space 2} .0685318{col 37}{space 1}    2.44{col 46}{space 3}0.016{col 54}{space 4} .0317383{col 67}{space 3} .3023391
+{txt}{space 7}3170  {c |}{col 14}{res}{space 2} .5429636{col 26}{space 2} .0685318{col 37}{space 1}    7.92{col 46}{space 3}0.000{col 54}{space 4} .4076632{col 67}{space 3} .6782639
+{txt}{space 7}3171  {c |}{col 14}{res}{space 2} .8499198{col 26}{space 2} .0685318{col 37}{space 1}   12.40{col 46}{space 3}0.000{col 54}{space 4} .7146195{col 67}{space 3} .9852202
+{txt}{space 7}3172  {c |}{col 14}{res}{space 2} 1.205299{col 26}{space 2} .0687719{col 37}{space 1}   17.53{col 46}{space 3}0.000{col 54}{space 4} 1.069524{col 67}{space 3} 1.341073
+{txt}{space 7}3173  {c |}{col 14}{res}{space 2}  1.41814{col 26}{space 2} .0720875{col 37}{space 1}   19.67{col 46}{space 3}0.000{col 54}{space 4}  1.27582{col 67}{space 3}  1.56046
+{txt}{space 7}3174  {c |}{col 14}{res}{space 2} 1.309996{col 26}{space 2} .0770791{col 37}{space 1}   17.00{col 46}{space 3}0.000{col 54}{space 4} 1.157821{col 67}{space 3} 1.462171
+{txt}{space 7}3175  {c |}{col 14}{res}{space 2} 1.200086{col 26}{space 2}  .078765{col 37}{space 1}   15.24{col 46}{space 3}0.000{col 54}{space 4} 1.044582{col 67}{space 3} 1.355589
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} 7.933249{col 26}{space 2} .0567787{col 37}{space 1}  139.72{col 46}{space 3}0.000{col 54}{space 4} 7.821152{col 67}{space 3} 8.045345
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. regress cases_log lagvacc_per lagvacc_per2 i.age i.week
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       198
+{txt}{hline 13}{c +}{hline 34}   F(31, 166)      = {res}   369.80
+{txt}       Model {c |} {res} 237.047219        31  7.64668447   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 3.43252999       166  .020677892   {txt}R-squared       ={res}    0.9857
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.9831
+{txt}       Total {c |} {res} 240.479749       197  1.22070938   {txt}Root MSE        =   {res}  .1438
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}   cases_log{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 1}lagvacc_per {c |}{col 14}{res}{space 2}-.0134144{col 26}{space 2} .0036669{col 37}{space 1}   -3.66{col 46}{space 3}0.000{col 54}{space 4}-.0206542{col 67}{space 3}-.0061746
+{txt}lagvacc_per2 {c |}{col 14}{res}{space 2} .0000967{col 26}{space 2} .0000446{col 37}{space 1}    2.17{col 46}{space 3}0.032{col 54}{space 4} 8.53e-06{col 67}{space 3} .0001848
+{txt}{space 12} {c |}
+{space 9}age {c |}
+{space 6}15-19  {c |}{col 14}{res}{space 2} -.437979{col 26}{space 2} .0433679{col 37}{space 1}  -10.10{col 46}{space 3}0.000{col 54}{space 4}-.5236027{col 67}{space 3}-.3523553
+{txt}{space 6}20-29  {c |}{col 14}{res}{space 2}-.0233398{col 26}{space 2} .0434865{col 37}{space 1}   -0.54{col 46}{space 3}0.592{col 54}{space 4}-.1091976{col 67}{space 3} .0625181
+{txt}{space 6}30-39  {c |}{col 14}{res}{space 2}-.2922038{col 26}{space 2} .0436402{col 37}{space 1}   -6.70{col 46}{space 3}0.000{col 54}{space 4}-.3783652{col 67}{space 3}-.2060423
+{txt}{space 6}40-49  {c |}{col 14}{res}{space 2}-.3828524{col 26}{space 2} .0440059{col 37}{space 1}   -8.70{col 46}{space 3}0.000{col 54}{space 4}-.4697358{col 67}{space 3} -.295969
+{txt}{space 6}50-59  {c |}{col 14}{res}{space 2}-.6363954{col 26}{space 2} .0445023{col 37}{space 1}  -14.30{col 46}{space 3}0.000{col 54}{space 4}-.7242589{col 67}{space 3}-.5485319
+{txt}{space 6}60-69  {c |}{col 14}{res}{space 2}-.9975742{col 26}{space 2} .0449908{col 37}{space 1}  -22.17{col 46}{space 3}0.000{col 54}{space 4}-1.086402{col 67}{space 3}-.9087462
+{txt}{space 6}70-79  {c |}{col 14}{res}{space 2}-1.653272{col 26}{space 2} .0449547{col 37}{space 1}  -36.78{col 46}{space 3}0.000{col 54}{space 4}-1.742028{col 67}{space 3}-1.564515
+{txt}{space 8}80+  {c |}{col 14}{res}{space 2}-2.032193{col 26}{space 2} .0448102{col 37}{space 1}  -45.35{col 46}{space 3}0.000{col 54}{space 4}-2.120664{col 67}{space 3}-1.943722
+{txt}{space 12} {c |}
+{space 8}week {c |}
+{space 7}3155  {c |}{col 14}{res}{space 2} .3871146{col 26}{space 2} .0677871{col 37}{space 1}    5.71{col 46}{space 3}0.000{col 54}{space 4} .2532787{col 67}{space 3} .5209506
+{txt}{space 7}3156  {c |}{col 14}{res}{space 2} .6999702{col 26}{space 2} .0677871{col 37}{space 1}   10.33{col 46}{space 3}0.000{col 54}{space 4} .5661343{col 67}{space 3} .8338061
+{txt}{space 7}3157  {c |}{col 14}{res}{space 2} 1.017811{col 26}{space 2} .0677871{col 37}{space 1}   15.01{col 46}{space 3}0.000{col 54}{space 4} .8839751{col 67}{space 3} 1.151647
+{txt}{space 7}3158  {c |}{col 14}{res}{space 2} .9974344{col 26}{space 2} .0677871{col 37}{space 1}   14.71{col 46}{space 3}0.000{col 54}{space 4} .8635984{col 67}{space 3}  1.13127
+{txt}{space 7}3159  {c |}{col 14}{res}{space 2} .6502206{col 26}{space 2} .0677871{col 37}{space 1}    9.59{col 46}{space 3}0.000{col 54}{space 4} .5163846{col 67}{space 3} .7840565
+{txt}{space 7}3160  {c |}{col 14}{res}{space 2}-.1001395{col 26}{space 2} .0677871{col 37}{space 1}   -1.48{col 46}{space 3}0.141{col 54}{space 4}-.2339754{col 67}{space 3} .0336964
+{txt}{space 7}3161  {c |}{col 14}{res}{space 2}-.7260257{col 26}{space 2} .0677871{col 37}{space 1}  -10.71{col 46}{space 3}0.000{col 54}{space 4}-.8598616{col 67}{space 3}-.5921898
+{txt}{space 7}3162  {c |}{col 14}{res}{space 2}-1.147822{col 26}{space 2} .0677871{col 37}{space 1}  -16.93{col 46}{space 3}0.000{col 54}{space 4}-1.281658{col 67}{space 3}-1.013986
+{txt}{space 7}3163  {c |}{col 14}{res}{space 2}-1.164281{col 26}{space 2} .0677871{col 37}{space 1}  -17.18{col 46}{space 3}0.000{col 54}{space 4}-1.298117{col 67}{space 3}-1.030445
+{txt}{space 7}3164  {c |}{col 14}{res}{space 2}-1.148024{col 26}{space 2} .0677871{col 37}{space 1}  -16.94{col 46}{space 3}0.000{col 54}{space 4} -1.28186{col 67}{space 3}-1.014188
+{txt}{space 7}3165  {c |}{col 14}{res}{space 2}-1.058696{col 26}{space 2} .0677871{col 37}{space 1}  -15.62{col 46}{space 3}0.000{col 54}{space 4}-1.192532{col 67}{space 3}-.9248597
+{txt}{space 7}3166  {c |}{col 14}{res}{space 2}-.8599854{col 26}{space 2} .0677871{col 37}{space 1}  -12.69{col 46}{space 3}0.000{col 54}{space 4}-.9938213{col 67}{space 3}-.7261495
+{txt}{space 7}3167  {c |}{col 14}{res}{space 2}-.4608992{col 26}{space 2} .0677871{col 37}{space 1}   -6.80{col 46}{space 3}0.000{col 54}{space 4}-.5947352{col 67}{space 3}-.3270633
+{txt}{space 7}3168  {c |}{col 14}{res}{space 2}-.1961716{col 26}{space 2} .0677871{col 37}{space 1}   -2.89{col 46}{space 3}0.004{col 54}{space 4}-.3300075{col 67}{space 3}-.0623357
+{txt}{space 7}3169  {c |}{col 14}{res}{space 2} .1670387{col 26}{space 2} .0677871{col 37}{space 1}    2.46{col 46}{space 3}0.015{col 54}{space 4} .0332028{col 67}{space 3} .3008746
+{txt}{space 7}3170  {c |}{col 14}{res}{space 2} .5429636{col 26}{space 2} .0677871{col 37}{space 1}    8.01{col 46}{space 3}0.000{col 54}{space 4} .4091276{col 67}{space 3} .6767995
+{txt}{space 7}3171  {c |}{col 14}{res}{space 2} .8499198{col 26}{space 2} .0677871{col 37}{space 1}   12.54{col 46}{space 3}0.000{col 54}{space 4} .7160839{col 67}{space 3} .9837558
+{txt}{space 7}3172  {c |}{col 14}{res}{space 2}  1.24028{col 26}{space 2} .0699162{col 37}{space 1}   17.74{col 46}{space 3}0.000{col 54}{space 4} 1.102241{col 67}{space 3}  1.37832
+{txt}{space 7}3173  {c |}{col 14}{res}{space 2} 1.490374{col 26}{space 2} .0787203{col 37}{space 1}   18.93{col 46}{space 3}0.000{col 54}{space 4} 1.334952{col 67}{space 3} 1.645796
+{txt}{space 7}3174  {c |}{col 14}{res}{space 2} 1.363721{col 26}{space 2} .0801763{col 37}{space 1}   17.01{col 46}{space 3}0.000{col 54}{space 4} 1.205424{col 67}{space 3} 1.522018
+{txt}{space 7}3175  {c |}{col 14}{res}{space 2} 1.249797{col 26}{space 2} .0812206{col 37}{space 1}   15.39{col 46}{space 3}0.000{col 54}{space 4} 1.089439{col 67}{space 3} 1.410156
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} 7.923674{col 26}{space 2} .0563354{col 37}{space 1}  140.65{col 46}{space 3}0.000{col 54}{space 4} 7.812447{col 67}{space 3}   8.0349
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. regress cases_log i.age i.week lagvacc_0 lagvacc_0_10 lagvacc_1~20 lagvacc_~100
+{p 0 6 2}{txt}note: lagvacc_20_100 omitted because of collinearity{p_end}
+
+      Source {c |}       SS           df       MS      Number of obs   ={res}       198
+{txt}{hline 13}{c +}{hline 34}   F(32, 165)      = {res}   402.69
+{txt}       Model {c |} {res} 237.439432        32  7.41998224   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res}  3.0403171       165  .018426164   {txt}R-squared       ={res}    0.9874
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.9849
+{txt}       Total {c |} {res} 240.479749       197  1.22070938   {txt}Root MSE        =   {res} .13574
+
+{txt}{hline 15}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}     cases_log{col 16}{c |}      Coef.{col 28}   Std. Err.{col 40}      t{col 48}   P>|t|{col 56}     [95% Con{col 69}f. Interval]
+{hline 15}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 11}age {c |}
+{space 8}15-19  {c |}{col 16}{res}{space 2}-.3588792{col 28}{space 2} .0438842{col 39}{space 1}   -8.18{col 48}{space 3}0.000{col 56}{space 4}-.4455261{col 69}{space 3}-.2722322
+{txt}{space 8}20-29  {c |}{col 16}{res}{space 2} .0466429{col 28}{space 2} .0438842{col 39}{space 1}    1.06{col 48}{space 3}0.289{col 56}{space 4} -.040004{col 69}{space 3} .1332899
+{txt}{space 8}30-39  {c |}{col 16}{res}{space 2}-.2207126{col 28}{space 2} .0436532{col 39}{space 1}   -5.06{col 48}{space 3}0.000{col 56}{space 4}-.3069034{col 69}{space 3}-.1345217
+{txt}{space 8}40-49  {c |}{col 16}{res}{space 2}-.3067294{col 28}{space 2} .0434309{col 39}{space 1}   -7.06{col 48}{space 3}0.000{col 56}{space 4}-.3924813{col 69}{space 3}-.2209774
+{txt}{space 8}50-59  {c |}{col 16}{res}{space 2}-.5753782{col 28}{space 2} .0434309{col 39}{space 1}  -13.25{col 48}{space 3}0.000{col 56}{space 4}-.6611302{col 69}{space 3}-.4896263
+{txt}{space 8}60-69  {c |}{col 16}{res}{space 2}-.9478091{col 28}{space 2} .0436201{col 39}{space 1}  -21.73{col 48}{space 3}0.000{col 56}{space 4}-1.033935{col 69}{space 3}-.8616835
+{txt}{space 8}70-79  {c |}{col 16}{res}{space 2}-1.606745{col 28}{space 2} .0436201{col 39}{space 1}  -36.83{col 48}{space 3}0.000{col 56}{space 4}-1.692871{col 69}{space 3} -1.52062
+{txt}{space 10}80+  {c |}{col 16}{res}{space 2}-1.983133{col 28}{space 2} .0436201{col 39}{space 1}  -45.46{col 48}{space 3}0.000{col 56}{space 4}-2.069258{col 69}{space 3}-1.897007
+{txt}{space 14} {c |}
+{space 10}week {c |}
+{space 9}3155  {c |}{col 16}{res}{space 2} .3871146{col 28}{space 2} .0639899{col 39}{space 1}    6.05{col 48}{space 3}0.000{col 56}{space 4} .2607701{col 69}{space 3} .5134591
+{txt}{space 9}3156  {c |}{col 16}{res}{space 2} .6999702{col 28}{space 2} .0639899{col 39}{space 1}   10.94{col 48}{space 3}0.000{col 56}{space 4} .5736257{col 69}{space 3} .8263147
+{txt}{space 9}3157  {c |}{col 16}{res}{space 2} 1.017811{col 28}{space 2} .0639899{col 39}{space 1}   15.91{col 48}{space 3}0.000{col 56}{space 4} .8914665{col 69}{space 3} 1.144155
+{txt}{space 9}3158  {c |}{col 16}{res}{space 2} .9974344{col 28}{space 2} .0639899{col 39}{space 1}   15.59{col 48}{space 3}0.000{col 56}{space 4} .8710898{col 69}{space 3} 1.123779
+{txt}{space 9}3159  {c |}{col 16}{res}{space 2} .6502206{col 28}{space 2} .0639899{col 39}{space 1}   10.16{col 48}{space 3}0.000{col 56}{space 4}  .523876{col 69}{space 3} .7765651
+{txt}{space 9}3160  {c |}{col 16}{res}{space 2}-.1001395{col 28}{space 2} .0639899{col 39}{space 1}   -1.56{col 48}{space 3}0.120{col 56}{space 4} -.226484{col 69}{space 3}  .026205
+{txt}{space 9}3161  {c |}{col 16}{res}{space 2}-.7260257{col 28}{space 2} .0639899{col 39}{space 1}  -11.35{col 48}{space 3}0.000{col 56}{space 4}-.8523702{col 69}{space 3}-.5996812
+{txt}{space 9}3162  {c |}{col 16}{res}{space 2}-1.147822{col 28}{space 2} .0639899{col 39}{space 1}  -17.94{col 48}{space 3}0.000{col 56}{space 4}-1.274166{col 69}{space 3}-1.021477
+{txt}{space 9}3163  {c |}{col 16}{res}{space 2}-1.164281{col 28}{space 2} .0639899{col 39}{space 1}  -18.19{col 48}{space 3}0.000{col 56}{space 4}-1.290625{col 69}{space 3}-1.037936
+{txt}{space 9}3164  {c |}{col 16}{res}{space 2}-1.148024{col 28}{space 2} .0639899{col 39}{space 1}  -17.94{col 48}{space 3}0.000{col 56}{space 4}-1.274369{col 69}{space 3} -1.02168
+{txt}{space 9}3165  {c |}{col 16}{res}{space 2}-1.058696{col 28}{space 2} .0639899{col 39}{space 1}  -16.54{col 48}{space 3}0.000{col 56}{space 4} -1.18504{col 69}{space 3}-.9323511
+{txt}{space 9}3166  {c |}{col 16}{res}{space 2}-.8599854{col 28}{space 2} .0639899{col 39}{space 1}  -13.44{col 48}{space 3}0.000{col 56}{space 4}-.9863299{col 69}{space 3}-.7336409
+{txt}{space 9}3167  {c |}{col 16}{res}{space 2}-.4608992{col 28}{space 2} .0639899{col 39}{space 1}   -7.20{col 48}{space 3}0.000{col 56}{space 4}-.5872438{col 69}{space 3}-.3345547
+{txt}{space 9}3168  {c |}{col 16}{res}{space 2}-.1961716{col 28}{space 2} .0639899{col 39}{space 1}   -3.07{col 48}{space 3}0.003{col 56}{space 4}-.3225161{col 69}{space 3}-.0698271
+{txt}{space 9}3169  {c |}{col 16}{res}{space 2} .1670387{col 28}{space 2} .0639899{col 39}{space 1}    2.61{col 48}{space 3}0.010{col 56}{space 4} .0406942{col 69}{space 3} .2933832
+{txt}{space 9}3170  {c |}{col 16}{res}{space 2} .5429636{col 28}{space 2} .0639899{col 39}{space 1}    8.49{col 48}{space 3}0.000{col 56}{space 4}  .416619{col 69}{space 3} .6693081
+{txt}{space 9}3171  {c |}{col 16}{res}{space 2} .8499198{col 28}{space 2} .0639899{col 39}{space 1}   13.28{col 48}{space 3}0.000{col 56}{space 4} .7235753{col 69}{space 3} .9762644
+{txt}{space 9}3172  {c |}{col 16}{res}{space 2} 1.607354{col 28}{space 2}  .097773{col 39}{space 1}   16.44{col 48}{space 3}0.000{col 56}{space 4} 1.414307{col 69}{space 3} 1.800402
+{txt}{space 9}3173  {c |}{col 16}{res}{space 2} 1.792187{col 28}{space 2} .0954109{col 39}{space 1}   18.78{col 48}{space 3}0.000{col 56}{space 4} 1.603804{col 69}{space 3} 1.980571
+{txt}{space 9}3174  {c |}{col 16}{res}{space 2} 1.651936{col 28}{space 2} .0960867{col 39}{space 1}   17.19{col 48}{space 3}0.000{col 56}{space 4} 1.462218{col 69}{space 3} 1.841654
+{txt}{space 9}3175  {c |}{col 16}{res}{space 2} 1.522411{col 28}{space 2} .0960867{col 39}{space 1}   15.84{col 48}{space 3}0.000{col 56}{space 4} 1.332693{col 69}{space 3} 1.712129
+{txt}{space 14} {c |}
+{space 5}lagvacc_0 {c |}{col 16}{res}{space 2} .6761747{col 28}{space 2}  .087064{col 39}{space 1}    7.77{col 48}{space 3}0.000{col 56}{space 4} .5042716{col 69}{space 3} .8480778
+{txt}{space 2}lagvacc_0_10 {c |}{col 16}{res}{space 2} .2211554{col 28}{space 2}  .065512{col 39}{space 1}    3.38{col 48}{space 3}0.001{col 56}{space 4} .0918055{col 69}{space 3} .3505053
+{txt}{space 1}lagvacc_10_20 {c |}{col 16}{res}{space 2} .1330791{col 28}{space 2} .0710796{col 39}{space 1}    1.87{col 48}{space 3}0.063{col 56}{space 4}-.0072637{col 69}{space 3} .2734219
+{txt}lagvacc_20_100 {c |}{col 16}{res}{space 2}        0{col 28}{txt}  (omitted)
+{space 9}_cons {c |}{col 16}{res}{space 2} 7.191603{col 28}{space 2} .1121819{col 39}{space 1}   64.11{col 48}{space 3}0.000{col 56}{space 4} 6.970106{col 69}{space 3}   7.4131
+{txt}{hline 15}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. regress cases_log i.age lagvacc_0 lagvacc_0_10 lagvacc_1~20 lagvacc_~100 i.week
+{p 0 6 2}{txt}note: lagvacc_20_100 omitted because of collinearity{p_end}
+
+      Source {c |}       SS           df       MS      Number of obs   ={res}       198
+{txt}{hline 13}{c +}{hline 34}   F(32, 165)      = {res}   402.69
+{txt}       Model {c |} {res} 237.439432        32  7.41998224   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res}  3.0403171       165  .018426164   {txt}R-squared       ={res}    0.9874
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.9849
+{txt}       Total {c |} {res} 240.479749       197  1.22070938   {txt}Root MSE        =   {res} .13574
+
+{txt}{hline 15}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}     cases_log{col 16}{c |}      Coef.{col 28}   Std. Err.{col 40}      t{col 48}   P>|t|{col 56}     [95% Con{col 69}f. Interval]
+{hline 15}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 11}age {c |}
+{space 8}15-19  {c |}{col 16}{res}{space 2}-.3588792{col 28}{space 2} .0438842{col 39}{space 1}   -8.18{col 48}{space 3}0.000{col 56}{space 4}-.4455261{col 69}{space 3}-.2722322
+{txt}{space 8}20-29  {c |}{col 16}{res}{space 2} .0466429{col 28}{space 2} .0438842{col 39}{space 1}    1.06{col 48}{space 3}0.289{col 56}{space 4} -.040004{col 69}{space 3} .1332899
+{txt}{space 8}30-39  {c |}{col 16}{res}{space 2}-.2207126{col 28}{space 2} .0436532{col 39}{space 1}   -5.06{col 48}{space 3}0.000{col 56}{space 4}-.3069034{col 69}{space 3}-.1345217
+{txt}{space 8}40-49  {c |}{col 16}{res}{space 2}-.3067294{col 28}{space 2} .0434309{col 39}{space 1}   -7.06{col 48}{space 3}0.000{col 56}{space 4}-.3924813{col 69}{space 3}-.2209774
+{txt}{space 8}50-59  {c |}{col 16}{res}{space 2}-.5753782{col 28}{space 2} .0434309{col 39}{space 1}  -13.25{col 48}{space 3}0.000{col 56}{space 4}-.6611302{col 69}{space 3}-.4896263
+{txt}{space 8}60-69  {c |}{col 16}{res}{space 2}-.9478091{col 28}{space 2} .0436201{col 39}{space 1}  -21.73{col 48}{space 3}0.000{col 56}{space 4}-1.033935{col 69}{space 3}-.8616835
+{txt}{space 8}70-79  {c |}{col 16}{res}{space 2}-1.606745{col 28}{space 2} .0436201{col 39}{space 1}  -36.83{col 48}{space 3}0.000{col 56}{space 4}-1.692871{col 69}{space 3} -1.52062
+{txt}{space 10}80+  {c |}{col 16}{res}{space 2}-1.983133{col 28}{space 2} .0436201{col 39}{space 1}  -45.46{col 48}{space 3}0.000{col 56}{space 4}-2.069258{col 69}{space 3}-1.897007
+{txt}{space 14} {c |}
+{space 5}lagvacc_0 {c |}{col 16}{res}{space 2} .6761747{col 28}{space 2}  .087064{col 39}{space 1}    7.77{col 48}{space 3}0.000{col 56}{space 4} .5042716{col 69}{space 3} .8480778
+{txt}{space 2}lagvacc_0_10 {c |}{col 16}{res}{space 2} .2211554{col 28}{space 2}  .065512{col 39}{space 1}    3.38{col 48}{space 3}0.001{col 56}{space 4} .0918055{col 69}{space 3} .3505053
+{txt}{space 1}lagvacc_10_20 {c |}{col 16}{res}{space 2} .1330791{col 28}{space 2} .0710796{col 39}{space 1}    1.87{col 48}{space 3}0.063{col 56}{space 4}-.0072637{col 69}{space 3} .2734219
+{txt}lagvacc_20_100 {c |}{col 16}{res}{space 2}        0{col 28}{txt}  (omitted)
+{space 14} {c |}
+{space 10}week {c |}
+{space 9}3155  {c |}{col 16}{res}{space 2} .3871146{col 28}{space 2} .0639899{col 39}{space 1}    6.05{col 48}{space 3}0.000{col 56}{space 4} .2607701{col 69}{space 3} .5134591
+{txt}{space 9}3156  {c |}{col 16}{res}{space 2} .6999702{col 28}{space 2} .0639899{col 39}{space 1}   10.94{col 48}{space 3}0.000{col 56}{space 4} .5736257{col 69}{space 3} .8263147
+{txt}{space 9}3157  {c |}{col 16}{res}{space 2} 1.017811{col 28}{space 2} .0639899{col 39}{space 1}   15.91{col 48}{space 3}0.000{col 56}{space 4} .8914665{col 69}{space 3} 1.144155
+{txt}{space 9}3158  {c |}{col 16}{res}{space 2} .9974344{col 28}{space 2} .0639899{col 39}{space 1}   15.59{col 48}{space 3}0.000{col 56}{space 4} .8710898{col 69}{space 3} 1.123779
+{txt}{space 9}3159  {c |}{col 16}{res}{space 2} .6502206{col 28}{space 2} .0639899{col 39}{space 1}   10.16{col 48}{space 3}0.000{col 56}{space 4}  .523876{col 69}{space 3} .7765651
+{txt}{space 9}3160  {c |}{col 16}{res}{space 2}-.1001395{col 28}{space 2} .0639899{col 39}{space 1}   -1.56{col 48}{space 3}0.120{col 56}{space 4} -.226484{col 69}{space 3}  .026205
+{txt}{space 9}3161  {c |}{col 16}{res}{space 2}-.7260257{col 28}{space 2} .0639899{col 39}{space 1}  -11.35{col 48}{space 3}0.000{col 56}{space 4}-.8523702{col 69}{space 3}-.5996812
+{txt}{space 9}3162  {c |}{col 16}{res}{space 2}-1.147822{col 28}{space 2} .0639899{col 39}{space 1}  -17.94{col 48}{space 3}0.000{col 56}{space 4}-1.274166{col 69}{space 3}-1.021477
+{txt}{space 9}3163  {c |}{col 16}{res}{space 2}-1.164281{col 28}{space 2} .0639899{col 39}{space 1}  -18.19{col 48}{space 3}0.000{col 56}{space 4}-1.290625{col 69}{space 3}-1.037936
+{txt}{space 9}3164  {c |}{col 16}{res}{space 2}-1.148024{col 28}{space 2} .0639899{col 39}{space 1}  -17.94{col 48}{space 3}0.000{col 56}{space 4}-1.274369{col 69}{space 3} -1.02168
+{txt}{space 9}3165  {c |}{col 16}{res}{space 2}-1.058696{col 28}{space 2} .0639899{col 39}{space 1}  -16.54{col 48}{space 3}0.000{col 56}{space 4} -1.18504{col 69}{space 3}-.9323511
+{txt}{space 9}3166  {c |}{col 16}{res}{space 2}-.8599854{col 28}{space 2} .0639899{col 39}{space 1}  -13.44{col 48}{space 3}0.000{col 56}{space 4}-.9863299{col 69}{space 3}-.7336409
+{txt}{space 9}3167  {c |}{col 16}{res}{space 2}-.4608992{col 28}{space 2} .0639899{col 39}{space 1}   -7.20{col 48}{space 3}0.000{col 56}{space 4}-.5872438{col 69}{space 3}-.3345547
+{txt}{space 9}3168  {c |}{col 16}{res}{space 2}-.1961716{col 28}{space 2} .0639899{col 39}{space 1}   -3.07{col 48}{space 3}0.003{col 56}{space 4}-.3225161{col 69}{space 3}-.0698271
+{txt}{space 9}3169  {c |}{col 16}{res}{space 2} .1670387{col 28}{space 2} .0639899{col 39}{space 1}    2.61{col 48}{space 3}0.010{col 56}{space 4} .0406942{col 69}{space 3} .2933832
+{txt}{space 9}3170  {c |}{col 16}{res}{space 2} .5429636{col 28}{space 2} .0639899{col 39}{space 1}    8.49{col 48}{space 3}0.000{col 56}{space 4}  .416619{col 69}{space 3} .6693081
+{txt}{space 9}3171  {c |}{col 16}{res}{space 2} .8499198{col 28}{space 2} .0639899{col 39}{space 1}   13.28{col 48}{space 3}0.000{col 56}{space 4} .7235753{col 69}{space 3} .9762644
+{txt}{space 9}3172  {c |}{col 16}{res}{space 2} 1.607354{col 28}{space 2}  .097773{col 39}{space 1}   16.44{col 48}{space 3}0.000{col 56}{space 4} 1.414307{col 69}{space 3} 1.800402
+{txt}{space 9}3173  {c |}{col 16}{res}{space 2} 1.792187{col 28}{space 2} .0954109{col 39}{space 1}   18.78{col 48}{space 3}0.000{col 56}{space 4} 1.603804{col 69}{space 3} 1.980571
+{txt}{space 9}3174  {c |}{col 16}{res}{space 2} 1.651936{col 28}{space 2} .0960867{col 39}{space 1}   17.19{col 48}{space 3}0.000{col 56}{space 4} 1.462218{col 69}{space 3} 1.841654
+{txt}{space 9}3175  {c |}{col 16}{res}{space 2} 1.522411{col 28}{space 2} .0960867{col 39}{space 1}   15.84{col 48}{space 3}0.000{col 56}{space 4} 1.332693{col 69}{space 3} 1.712129
+{txt}{space 14} {c |}
+{space 9}_cons {c |}{col 16}{res}{space 2} 7.191603{col 28}{space 2} .1121819{col 39}{space 1}   64.11{col 48}{space 3}0.000{col 56}{space 4} 6.970106{col 69}{space 3}   7.4131
+{txt}{hline 15}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. regress cases_log i.age lagvacc_0_10 lagvacc_1~20 lagvacc_~100 i.week
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       198
+{txt}{hline 13}{c +}{hline 34}   F(32, 165)      = {res}   402.69
+{txt}       Model {c |} {res} 237.439432        32  7.41998224   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res}  3.0403171       165  .018426164   {txt}R-squared       ={res}    0.9874
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.9849
+{txt}       Total {c |} {res} 240.479749       197  1.22070938   {txt}Root MSE        =   {res} .13574
+
+{txt}{hline 15}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}     cases_log{col 16}{c |}      Coef.{col 28}   Std. Err.{col 40}      t{col 48}   P>|t|{col 56}     [95% Con{col 69}f. Interval]
+{hline 15}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 11}age {c |}
+{space 8}15-19  {c |}{col 16}{res}{space 2}-.3588792{col 28}{space 2} .0438842{col 39}{space 1}   -8.18{col 48}{space 3}0.000{col 56}{space 4}-.4455261{col 69}{space 3}-.2722322
+{txt}{space 8}20-29  {c |}{col 16}{res}{space 2} .0466429{col 28}{space 2} .0438842{col 39}{space 1}    1.06{col 48}{space 3}0.289{col 56}{space 4} -.040004{col 69}{space 3} .1332899
+{txt}{space 8}30-39  {c |}{col 16}{res}{space 2}-.2207126{col 28}{space 2} .0436532{col 39}{space 1}   -5.06{col 48}{space 3}0.000{col 56}{space 4}-.3069034{col 69}{space 3}-.1345217
+{txt}{space 8}40-49  {c |}{col 16}{res}{space 2}-.3067294{col 28}{space 2} .0434309{col 39}{space 1}   -7.06{col 48}{space 3}0.000{col 56}{space 4}-.3924813{col 69}{space 3}-.2209774
+{txt}{space 8}50-59  {c |}{col 16}{res}{space 2}-.5753782{col 28}{space 2} .0434309{col 39}{space 1}  -13.25{col 48}{space 3}0.000{col 56}{space 4}-.6611302{col 69}{space 3}-.4896263
+{txt}{space 8}60-69  {c |}{col 16}{res}{space 2}-.9478091{col 28}{space 2} .0436201{col 39}{space 1}  -21.73{col 48}{space 3}0.000{col 56}{space 4}-1.033935{col 69}{space 3}-.8616835
+{txt}{space 8}70-79  {c |}{col 16}{res}{space 2}-1.606745{col 28}{space 2} .0436201{col 39}{space 1}  -36.83{col 48}{space 3}0.000{col 56}{space 4}-1.692871{col 69}{space 3} -1.52062
+{txt}{space 10}80+  {c |}{col 16}{res}{space 2}-1.983133{col 28}{space 2} .0436201{col 39}{space 1}  -45.46{col 48}{space 3}0.000{col 56}{space 4}-2.069258{col 69}{space 3}-1.897007
+{txt}{space 14} {c |}
+{space 2}lagvacc_0_10 {c |}{col 16}{res}{space 2}-.4550193{col 28}{space 2} .0870872{col 39}{space 1}   -5.22{col 48}{space 3}0.000{col 56}{space 4}-.6269682{col 69}{space 3}-.2830704
+{txt}{space 1}lagvacc_10_20 {c |}{col 16}{res}{space 2}-.5430955{col 28}{space 2} .0926803{col 39}{space 1}   -5.86{col 48}{space 3}0.000{col 56}{space 4}-.7260877{col 69}{space 3}-.3601034
+{txt}lagvacc_20_100 {c |}{col 16}{res}{space 2}-.6761747{col 28}{space 2}  .087064{col 39}{space 1}   -7.77{col 48}{space 3}0.000{col 56}{space 4}-.8480778{col 69}{space 3}-.5042716
+{txt}{space 14} {c |}
+{space 10}week {c |}
+{space 9}3155  {c |}{col 16}{res}{space 2} .3871146{col 28}{space 2} .0639899{col 39}{space 1}    6.05{col 48}{space 3}0.000{col 56}{space 4} .2607701{col 69}{space 3} .5134591
+{txt}{space 9}3156  {c |}{col 16}{res}{space 2} .6999702{col 28}{space 2} .0639899{col 39}{space 1}   10.94{col 48}{space 3}0.000{col 56}{space 4} .5736257{col 69}{space 3} .8263147
+{txt}{space 9}3157  {c |}{col 16}{res}{space 2} 1.017811{col 28}{space 2} .0639899{col 39}{space 1}   15.91{col 48}{space 3}0.000{col 56}{space 4} .8914665{col 69}{space 3} 1.144155
+{txt}{space 9}3158  {c |}{col 16}{res}{space 2} .9974344{col 28}{space 2} .0639899{col 39}{space 1}   15.59{col 48}{space 3}0.000{col 56}{space 4} .8710898{col 69}{space 3} 1.123779
+{txt}{space 9}3159  {c |}{col 16}{res}{space 2} .6502206{col 28}{space 2} .0639899{col 39}{space 1}   10.16{col 48}{space 3}0.000{col 56}{space 4}  .523876{col 69}{space 3} .7765651
+{txt}{space 9}3160  {c |}{col 16}{res}{space 2}-.1001395{col 28}{space 2} .0639899{col 39}{space 1}   -1.56{col 48}{space 3}0.120{col 56}{space 4} -.226484{col 69}{space 3}  .026205
+{txt}{space 9}3161  {c |}{col 16}{res}{space 2}-.7260257{col 28}{space 2} .0639899{col 39}{space 1}  -11.35{col 48}{space 3}0.000{col 56}{space 4}-.8523702{col 69}{space 3}-.5996812
+{txt}{space 9}3162  {c |}{col 16}{res}{space 2}-1.147822{col 28}{space 2} .0639899{col 39}{space 1}  -17.94{col 48}{space 3}0.000{col 56}{space 4}-1.274166{col 69}{space 3}-1.021477
+{txt}{space 9}3163  {c |}{col 16}{res}{space 2}-1.164281{col 28}{space 2} .0639899{col 39}{space 1}  -18.19{col 48}{space 3}0.000{col 56}{space 4}-1.290625{col 69}{space 3}-1.037936
+{txt}{space 9}3164  {c |}{col 16}{res}{space 2}-1.148024{col 28}{space 2} .0639899{col 39}{space 1}  -17.94{col 48}{space 3}0.000{col 56}{space 4}-1.274369{col 69}{space 3} -1.02168
+{txt}{space 9}3165  {c |}{col 16}{res}{space 2}-1.058696{col 28}{space 2} .0639899{col 39}{space 1}  -16.54{col 48}{space 3}0.000{col 56}{space 4} -1.18504{col 69}{space 3}-.9323511
+{txt}{space 9}3166  {c |}{col 16}{res}{space 2}-.8599854{col 28}{space 2} .0639899{col 39}{space 1}  -13.44{col 48}{space 3}0.000{col 56}{space 4}-.9863299{col 69}{space 3}-.7336409
+{txt}{space 9}3167  {c |}{col 16}{res}{space 2}-.4608992{col 28}{space 2} .0639899{col 39}{space 1}   -7.20{col 48}{space 3}0.000{col 56}{space 4}-.5872438{col 69}{space 3}-.3345547
+{txt}{space 9}3168  {c |}{col 16}{res}{space 2}-.1961716{col 28}{space 2} .0639899{col 39}{space 1}   -3.07{col 48}{space 3}0.003{col 56}{space 4}-.3225161{col 69}{space 3}-.0698271
+{txt}{space 9}3169  {c |}{col 16}{res}{space 2} .1670387{col 28}{space 2} .0639899{col 39}{space 1}    2.61{col 48}{space 3}0.010{col 56}{space 4} .0406942{col 69}{space 3} .2933832
+{txt}{space 9}3170  {c |}{col 16}{res}{space 2} .5429636{col 28}{space 2} .0639899{col 39}{space 1}    8.49{col 48}{space 3}0.000{col 56}{space 4}  .416619{col 69}{space 3} .6693081
+{txt}{space 9}3171  {c |}{col 16}{res}{space 2} .8499198{col 28}{space 2} .0639899{col 39}{space 1}   13.28{col 48}{space 3}0.000{col 56}{space 4} .7235753{col 69}{space 3} .9762644
+{txt}{space 9}3172  {c |}{col 16}{res}{space 2} 1.607354{col 28}{space 2}  .097773{col 39}{space 1}   16.44{col 48}{space 3}0.000{col 56}{space 4} 1.414307{col 69}{space 3} 1.800402
+{txt}{space 9}3173  {c |}{col 16}{res}{space 2} 1.792187{col 28}{space 2} .0954109{col 39}{space 1}   18.78{col 48}{space 3}0.000{col 56}{space 4} 1.603804{col 69}{space 3} 1.980571
+{txt}{space 9}3174  {c |}{col 16}{res}{space 2} 1.651936{col 28}{space 2} .0960867{col 39}{space 1}   17.19{col 48}{space 3}0.000{col 56}{space 4} 1.462218{col 69}{space 3} 1.841654
+{txt}{space 9}3175  {c |}{col 16}{res}{space 2} 1.522411{col 28}{space 2} .0960867{col 39}{space 1}   15.84{col 48}{space 3}0.000{col 56}{space 4} 1.332693{col 69}{space 3} 1.712129
+{txt}{space 14} {c |}
+{space 9}_cons {c |}{col 16}{res}{space 2} 7.867777{col 28}{space 2} .0543809{col 39}{space 1}  144.68{col 48}{space 3}0.000{col 56}{space 4} 7.760405{col 69}{space 3}  7.97515
+{txt}{hline 15}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. summarize age cases-rate cases_log lagvacc_per lagvacc_per2 lagvacc_0 lagvacc_0_10 lagvacc_10_2-
+{bf}{err}cases{sf} ambiguous abbreviation
+{txt}{search r(111), local:r(111);}
+
+{com}. summarize age cases_rate cases_log lagvacc_per lagvacc_per2 lagvacc_0 lagvacc_0_10 lagvacc_10_20 lagvacc_20_100
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 9}age {c |}{res}        198           4    2.588534          0          8
+{txt}{space 2}cases_rate {c |}{res}        198    2598.147    2065.757   262.2702   9049.648
+{txt}{space 3}cases_log {c |}{res}        198    7.343567    1.104857   4.691348   9.657331
+{txt}{space 1}lagvacc_per {c |}{res}        198    4.433254    15.22428          0    86.4881
+{txt}lagvacc_per2 {c |}{res}        198    250.2618     1094.51          0   7480.191
+{txt}{hline 13}{c +}{hline 57}
+{space 3}lagvacc_0 {c |}{res}        198    .8383838    .3690314          0          1
+{txt}lagvacc_0_10 {c |}{res}        198    .0606061    .2392111          0          1
+{txt}lagvacc_1~20 {c |}{res}        198    .0353535    .1851399          0          1
+{txt}lagvacc_~100 {c |}{res}        198    .0656566    .2483086          0          1
+
+{com}. sort age
+
+. tab age
+
+  {txt}Age Group {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+       0-14 {c |}{res}         22       11.11       11.11
+{txt}      15-19 {c |}{res}         22       11.11       22.22
+{txt}      20-29 {c |}{res}         22       11.11       33.33
+{txt}      30-39 {c |}{res}         22       11.11       44.44
+{txt}      40-49 {c |}{res}         22       11.11       55.56
+{txt}      50-59 {c |}{res}         22       11.11       66.67
+{txt}      60-69 {c |}{res}         22       11.11       77.78
+{txt}      70-79 {c |}{res}         22       11.11       88.89
+{txt}        80+ {c |}{res}         22       11.11      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        198      100.00
+
+{com}. tab age lagvacc_0 lagvacc_0_10 lagvacc_10_20 lagvacc_20_100
+{err}too many variables specified
+{txt}{search r(103), local:r(103);}
+
+{com}. . tab lagvacc_0 tab lagvacc_0_10 tab lagvacc_10_20 tab lagvacc_20_100
+{err}variable {bf}tab{sf} not found
+{txt}{search r(111), local:r(111);}
+
+{com}. tab lagvacc_0 
+
+        {txt}Lag {c |}
+Vaccination {c |}
+       : 0% {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}         32       16.16       16.16
+{txt}          1 {c |}{res}        166       83.84      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        198      100.00
+
+{com}. tab lagvacc_0_10 
+
+        {txt}Lag {c |}
+Vaccination {c |}
+ : (0%-10%) {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        186       93.94       93.94
+{txt}          1 {c |}{res}         12        6.06      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        198      100.00
+
+{com}. tab lagvacc_10_20
+
+        {txt}Lag {c |}
+Vaccination {c |}
+: [10%-20%) {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        191       96.46       96.46
+{txt}          1 {c |}{res}          7        3.54      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        198      100.00
+
+{com}.  tab lagvacc_20_100
+
+        {txt}Lag {c |}
+Vaccination {c |}
+          : {c |}
+ [20%-100%] {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        185       93.43       93.43
+{txt}          1 {c |}{res}         13        6.57      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        198      100.00
+
+{com}. sort week
+
+. twoway (scatter cases_log lagvacc_per) (scatter cases_log lagvacc_per)
+{res}
+{com}. rvfplot, yline=0
+{err}option {bf:yline} not allowed
+{txt}{search r(198), local:r(198);}
+
+{com}. rvfplot
+{res}
+{com}. rvfplot, addplot((scatter cases_log lagvacc_per), below)
+{res}
+{com}. regress cases_log lagvacc_per
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       198
+{txt}{hline 13}{c +}{hline 34}   F(1, 196)       = {res}     0.76
+{txt}       Model {c |} {res}  .93144025         1   .93144025   {txt}Prob > F        ={res}    0.3837
+{txt}    Residual {c |} {res} 239.548308       196  1.22218525   {txt}R-squared       ={res}    0.0039
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}   -0.0012
+{txt}       Total {c |} {res} 240.479749       197  1.22070938   {txt}Root MSE        =   {res} 1.1055
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}   cases_log{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 1}lagvacc_per {c |}{col 14}{res}{space 2} .0045166{col 26}{space 2} .0051737{col 37}{space 1}    0.87{col 46}{space 3}0.384{col 54}{space 4}-.0056866{col 67}{space 3} .0147198
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 7.323544{col 26}{space 2} .0818457{col 37}{space 1}   89.48{col 46}{space 3}0.000{col 54}{space 4} 7.162133{col 67}{space 3} 7.484955
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. rvfplot
+{res}
+{com}. rvfplot, addplot((scatter cases_log lagvacc_per), below) yline(0)
+{res}
+{com}. rvfplot, yline(0)
+{res}
+{com}. regress cases_log i.age i.week lagvacc_0 lagvacc_0_10 lagvacc_1~20 lagvacc_~100
+{p 0 6 2}{txt}note: lagvacc_20_100 omitted because of collinearity{p_end}
+
+      Source {c |}       SS           df       MS      Number of obs   ={res}       198
+{txt}{hline 13}{c +}{hline 34}   F(32, 165)      = {res}   402.69
+{txt}       Model {c |} {res} 237.439432        32  7.41998224   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res}  3.0403171       165  .018426164   {txt}R-squared       ={res}    0.9874
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.9849
+{txt}       Total {c |} {res} 240.479749       197  1.22070938   {txt}Root MSE        =   {res} .13574
+
+{txt}{hline 15}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}     cases_log{col 16}{c |}      Coef.{col 28}   Std. Err.{col 40}      t{col 48}   P>|t|{col 56}     [95% Con{col 69}f. Interval]
+{hline 15}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 11}age {c |}
+{space 8}15-19  {c |}{col 16}{res}{space 2}-.3588792{col 28}{space 2} .0438842{col 39}{space 1}   -8.18{col 48}{space 3}0.000{col 56}{space 4}-.4455261{col 69}{space 3}-.2722322
+{txt}{space 8}20-29  {c |}{col 16}{res}{space 2} .0466429{col 28}{space 2} .0438842{col 39}{space 1}    1.06{col 48}{space 3}0.289{col 56}{space 4} -.040004{col 69}{space 3} .1332899
+{txt}{space 8}30-39  {c |}{col 16}{res}{space 2}-.2207126{col 28}{space 2} .0436532{col 39}{space 1}   -5.06{col 48}{space 3}0.000{col 56}{space 4}-.3069034{col 69}{space 3}-.1345217
+{txt}{space 8}40-49  {c |}{col 16}{res}{space 2}-.3067294{col 28}{space 2} .0434309{col 39}{space 1}   -7.06{col 48}{space 3}0.000{col 56}{space 4}-.3924813{col 69}{space 3}-.2209774
+{txt}{space 8}50-59  {c |}{col 16}{res}{space 2}-.5753782{col 28}{space 2} .0434309{col 39}{space 1}  -13.25{col 48}{space 3}0.000{col 56}{space 4}-.6611302{col 69}{space 3}-.4896263
+{txt}{space 8}60-69  {c |}{col 16}{res}{space 2}-.9478091{col 28}{space 2} .0436201{col 39}{space 1}  -21.73{col 48}{space 3}0.000{col 56}{space 4}-1.033935{col 69}{space 3}-.8616835
+{txt}{space 8}70-79  {c |}{col 16}{res}{space 2}-1.606745{col 28}{space 2} .0436201{col 39}{space 1}  -36.83{col 48}{space 3}0.000{col 56}{space 4}-1.692871{col 69}{space 3} -1.52062
+{txt}{space 10}80+  {c |}{col 16}{res}{space 2}-1.983133{col 28}{space 2} .0436201{col 39}{space 1}  -45.46{col 48}{space 3}0.000{col 56}{space 4}-2.069258{col 69}{space 3}-1.897007
+{txt}{space 14} {c |}
+{space 10}week {c |}
+{space 9}3155  {c |}{col 16}{res}{space 2} .3871146{col 28}{space 2} .0639899{col 39}{space 1}    6.05{col 48}{space 3}0.000{col 56}{space 4} .2607701{col 69}{space 3} .5134591
+{txt}{space 9}3156  {c |}{col 16}{res}{space 2} .6999702{col 28}{space 2} .0639899{col 39}{space 1}   10.94{col 48}{space 3}0.000{col 56}{space 4} .5736257{col 69}{space 3} .8263147
+{txt}{space 9}3157  {c |}{col 16}{res}{space 2} 1.017811{col 28}{space 2} .0639899{col 39}{space 1}   15.91{col 48}{space 3}0.000{col 56}{space 4} .8914665{col 69}{space 3} 1.144155
+{txt}{space 9}3158  {c |}{col 16}{res}{space 2} .9974344{col 28}{space 2} .0639899{col 39}{space 1}   15.59{col 48}{space 3}0.000{col 56}{space 4} .8710898{col 69}{space 3} 1.123779
+{txt}{space 9}3159  {c |}{col 16}{res}{space 2} .6502206{col 28}{space 2} .0639899{col 39}{space 1}   10.16{col 48}{space 3}0.000{col 56}{space 4}  .523876{col 69}{space 3} .7765651
+{txt}{space 9}3160  {c |}{col 16}{res}{space 2}-.1001395{col 28}{space 2} .0639899{col 39}{space 1}   -1.56{col 48}{space 3}0.120{col 56}{space 4} -.226484{col 69}{space 3}  .026205
+{txt}{space 9}3161  {c |}{col 16}{res}{space 2}-.7260257{col 28}{space 2} .0639899{col 39}{space 1}  -11.35{col 48}{space 3}0.000{col 56}{space 4}-.8523702{col 69}{space 3}-.5996812
+{txt}{space 9}3162  {c |}{col 16}{res}{space 2}-1.147822{col 28}{space 2} .0639899{col 39}{space 1}  -17.94{col 48}{space 3}0.000{col 56}{space 4}-1.274166{col 69}{space 3}-1.021477
+{txt}{space 9}3163  {c |}{col 16}{res}{space 2}-1.164281{col 28}{space 2} .0639899{col 39}{space 1}  -18.19{col 48}{space 3}0.000{col 56}{space 4}-1.290625{col 69}{space 3}-1.037936
+{txt}{space 9}3164  {c |}{col 16}{res}{space 2}-1.148024{col 28}{space 2} .0639899{col 39}{space 1}  -17.94{col 48}{space 3}0.000{col 56}{space 4}-1.274369{col 69}{space 3} -1.02168
+{txt}{space 9}3165  {c |}{col 16}{res}{space 2}-1.058696{col 28}{space 2} .0639899{col 39}{space 1}  -16.54{col 48}{space 3}0.000{col 56}{space 4} -1.18504{col 69}{space 3}-.9323511
+{txt}{space 9}3166  {c |}{col 16}{res}{space 2}-.8599854{col 28}{space 2} .0639899{col 39}{space 1}  -13.44{col 48}{space 3}0.000{col 56}{space 4}-.9863299{col 69}{space 3}-.7336409
+{txt}{space 9}3167  {c |}{col 16}{res}{space 2}-.4608992{col 28}{space 2} .0639899{col 39}{space 1}   -7.20{col 48}{space 3}0.000{col 56}{space 4}-.5872438{col 69}{space 3}-.3345547
+{txt}{space 9}3168  {c |}{col 16}{res}{space 2}-.1961716{col 28}{space 2} .0639899{col 39}{space 1}   -3.07{col 48}{space 3}0.003{col 56}{space 4}-.3225161{col 69}{space 3}-.0698271
+{txt}{space 9}3169  {c |}{col 16}{res}{space 2} .1670387{col 28}{space 2} .0639899{col 39}{space 1}    2.61{col 48}{space 3}0.010{col 56}{space 4} .0406942{col 69}{space 3} .2933832
+{txt}{space 9}3170  {c |}{col 16}{res}{space 2} .5429636{col 28}{space 2} .0639899{col 39}{space 1}    8.49{col 48}{space 3}0.000{col 56}{space 4}  .416619{col 69}{space 3} .6693081
+{txt}{space 9}3171  {c |}{col 16}{res}{space 2} .8499198{col 28}{space 2} .0639899{col 39}{space 1}   13.28{col 48}{space 3}0.000{col 56}{space 4} .7235753{col 69}{space 3} .9762644
+{txt}{space 9}3172  {c |}{col 16}{res}{space 2} 1.607354{col 28}{space 2}  .097773{col 39}{space 1}   16.44{col 48}{space 3}0.000{col 56}{space 4} 1.414307{col 69}{space 3} 1.800402
+{txt}{space 9}3173  {c |}{col 16}{res}{space 2} 1.792187{col 28}{space 2} .0954109{col 39}{space 1}   18.78{col 48}{space 3}0.000{col 56}{space 4} 1.603804{col 69}{space 3} 1.980571
+{txt}{space 9}3174  {c |}{col 16}{res}{space 2} 1.651936{col 28}{space 2} .0960867{col 39}{space 1}   17.19{col 48}{space 3}0.000{col 56}{space 4} 1.462218{col 69}{space 3} 1.841654
+{txt}{space 9}3175  {c |}{col 16}{res}{space 2} 1.522411{col 28}{space 2} .0960867{col 39}{space 1}   15.84{col 48}{space 3}0.000{col 56}{space 4} 1.332693{col 69}{space 3} 1.712129
+{txt}{space 14} {c |}
+{space 5}lagvacc_0 {c |}{col 16}{res}{space 2} .6761747{col 28}{space 2}  .087064{col 39}{space 1}    7.77{col 48}{space 3}0.000{col 56}{space 4} .5042716{col 69}{space 3} .8480778
+{txt}{space 2}lagvacc_0_10 {c |}{col 16}{res}{space 2} .2211554{col 28}{space 2}  .065512{col 39}{space 1}    3.38{col 48}{space 3}0.001{col 56}{space 4} .0918055{col 69}{space 3} .3505053
+{txt}{space 1}lagvacc_10_20 {c |}{col 16}{res}{space 2} .1330791{col 28}{space 2} .0710796{col 39}{space 1}    1.87{col 48}{space 3}0.063{col 56}{space 4}-.0072637{col 69}{space 3} .2734219
+{txt}lagvacc_20_100 {c |}{col 16}{res}{space 2}        0{col 28}{txt}  (omitted)
+{space 9}_cons {c |}{col 16}{res}{space 2} 7.191603{col 28}{space 2} .1121819{col 39}{space 1}   64.11{col 48}{space 3}0.000{col 56}{space 4} 6.970106{col 69}{space 3}   7.4131
+{txt}{hline 15}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. rvfplot
+{res}
+{com}. regress cases_log lagvacc_per
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       198
+{txt}{hline 13}{c +}{hline 34}   F(1, 196)       = {res}     0.76
+{txt}       Model {c |} {res}  .93144025         1   .93144025   {txt}Prob > F        ={res}    0.3837
+{txt}    Residual {c |} {res} 239.548308       196  1.22218525   {txt}R-squared       ={res}    0.0039
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}   -0.0012
+{txt}       Total {c |} {res} 240.479749       197  1.22070938   {txt}Root MSE        =   {res} 1.1055
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}   cases_log{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 1}lagvacc_per {c |}{col 14}{res}{space 2} .0045166{col 26}{space 2} .0051737{col 37}{space 1}    0.87{col 46}{space 3}0.384{col 54}{space 4}-.0056866{col 67}{space 3} .0147198
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 7.323544{col 26}{space 2} .0818457{col 37}{space 1}   89.48{col 46}{space 3}0.000{col 54}{space 4} 7.162133{col 67}{space 3} 7.484955
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. predict resid_1, residuals
+
+. qqnorm resid_1
+{err}command {bf}qqnorm{sf} is unrecognized
+{txt}{search r(199), local:r(199);}
+
+{com}. qnorm resid_1
+{res}
+{com}. regress cases_log i.age i.week lagvacc_0 lagvacc_0_10 lagvacc_1~20 lagvacc_~100
+{p 0 6 2}{txt}note: lagvacc_20_100 omitted because of collinearity{p_end}
+
+      Source {c |}       SS           df       MS      Number of obs   ={res}       198
+{txt}{hline 13}{c +}{hline 34}   F(32, 165)      = {res}   402.69
+{txt}       Model {c |} {res} 237.439432        32  7.41998224   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res}  3.0403171       165  .018426164   {txt}R-squared       ={res}    0.9874
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.9849
+{txt}       Total {c |} {res} 240.479749       197  1.22070938   {txt}Root MSE        =   {res} .13574
+
+{txt}{hline 15}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}     cases_log{col 16}{c |}      Coef.{col 28}   Std. Err.{col 40}      t{col 48}   P>|t|{col 56}     [95% Con{col 69}f. Interval]
+{hline 15}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 11}age {c |}
+{space 8}15-19  {c |}{col 16}{res}{space 2}-.3588792{col 28}{space 2} .0438842{col 39}{space 1}   -8.18{col 48}{space 3}0.000{col 56}{space 4}-.4455261{col 69}{space 3}-.2722322
+{txt}{space 8}20-29  {c |}{col 16}{res}{space 2} .0466429{col 28}{space 2} .0438842{col 39}{space 1}    1.06{col 48}{space 3}0.289{col 56}{space 4} -.040004{col 69}{space 3} .1332899
+{txt}{space 8}30-39  {c |}{col 16}{res}{space 2}-.2207126{col 28}{space 2} .0436532{col 39}{space 1}   -5.06{col 48}{space 3}0.000{col 56}{space 4}-.3069034{col 69}{space 3}-.1345217
+{txt}{space 8}40-49  {c |}{col 16}{res}{space 2}-.3067294{col 28}{space 2} .0434309{col 39}{space 1}   -7.06{col 48}{space 3}0.000{col 56}{space 4}-.3924813{col 69}{space 3}-.2209774
+{txt}{space 8}50-59  {c |}{col 16}{res}{space 2}-.5753782{col 28}{space 2} .0434309{col 39}{space 1}  -13.25{col 48}{space 3}0.000{col 56}{space 4}-.6611302{col 69}{space 3}-.4896263
+{txt}{space 8}60-69  {c |}{col 16}{res}{space 2}-.9478091{col 28}{space 2} .0436201{col 39}{space 1}  -21.73{col 48}{space 3}0.000{col 56}{space 4}-1.033935{col 69}{space 3}-.8616835
+{txt}{space 8}70-79  {c |}{col 16}{res}{space 2}-1.606745{col 28}{space 2} .0436201{col 39}{space 1}  -36.83{col 48}{space 3}0.000{col 56}{space 4}-1.692871{col 69}{space 3} -1.52062
+{txt}{space 10}80+  {c |}{col 16}{res}{space 2}-1.983133{col 28}{space 2} .0436201{col 39}{space 1}  -45.46{col 48}{space 3}0.000{col 56}{space 4}-2.069258{col 69}{space 3}-1.897007
+{txt}{space 14} {c |}
+{space 10}week {c |}
+{space 9}3155  {c |}{col 16}{res}{space 2} .3871146{col 28}{space 2} .0639899{col 39}{space 1}    6.05{col 48}{space 3}0.000{col 56}{space 4} .2607701{col 69}{space 3} .5134591
+{txt}{space 9}3156  {c |}{col 16}{res}{space 2} .6999702{col 28}{space 2} .0639899{col 39}{space 1}   10.94{col 48}{space 3}0.000{col 56}{space 4} .5736257{col 69}{space 3} .8263147
+{txt}{space 9}3157  {c |}{col 16}{res}{space 2} 1.017811{col 28}{space 2} .0639899{col 39}{space 1}   15.91{col 48}{space 3}0.000{col 56}{space 4} .8914665{col 69}{space 3} 1.144155
+{txt}{space 9}3158  {c |}{col 16}{res}{space 2} .9974344{col 28}{space 2} .0639899{col 39}{space 1}   15.59{col 48}{space 3}0.000{col 56}{space 4} .8710898{col 69}{space 3} 1.123779
+{txt}{space 9}3159  {c |}{col 16}{res}{space 2} .6502206{col 28}{space 2} .0639899{col 39}{space 1}   10.16{col 48}{space 3}0.000{col 56}{space 4}  .523876{col 69}{space 3} .7765651
+{txt}{space 9}3160  {c |}{col 16}{res}{space 2}-.1001395{col 28}{space 2} .0639899{col 39}{space 1}   -1.56{col 48}{space 3}0.120{col 56}{space 4} -.226484{col 69}{space 3}  .026205
+{txt}{space 9}3161  {c |}{col 16}{res}{space 2}-.7260257{col 28}{space 2} .0639899{col 39}{space 1}  -11.35{col 48}{space 3}0.000{col 56}{space 4}-.8523702{col 69}{space 3}-.5996812
+{txt}{space 9}3162  {c |}{col 16}{res}{space 2}-1.147822{col 28}{space 2} .0639899{col 39}{space 1}  -17.94{col 48}{space 3}0.000{col 56}{space 4}-1.274166{col 69}{space 3}-1.021477
+{txt}{space 9}3163  {c |}{col 16}{res}{space 2}-1.164281{col 28}{space 2} .0639899{col 39}{space 1}  -18.19{col 48}{space 3}0.000{col 56}{space 4}-1.290625{col 69}{space 3}-1.037936
+{txt}{space 9}3164  {c |}{col 16}{res}{space 2}-1.148024{col 28}{space 2} .0639899{col 39}{space 1}  -17.94{col 48}{space 3}0.000{col 56}{space 4}-1.274369{col 69}{space 3} -1.02168
+{txt}{space 9}3165  {c |}{col 16}{res}{space 2}-1.058696{col 28}{space 2} .0639899{col 39}{space 1}  -16.54{col 48}{space 3}0.000{col 56}{space 4} -1.18504{col 69}{space 3}-.9323511
+{txt}{space 9}3166  {c |}{col 16}{res}{space 2}-.8599854{col 28}{space 2} .0639899{col 39}{space 1}  -13.44{col 48}{space 3}0.000{col 56}{space 4}-.9863299{col 69}{space 3}-.7336409
+{txt}{space 9}3167  {c |}{col 16}{res}{space 2}-.4608992{col 28}{space 2} .0639899{col 39}{space 1}   -7.20{col 48}{space 3}0.000{col 56}{space 4}-.5872438{col 69}{space 3}-.3345547
+{txt}{space 9}3168  {c |}{col 16}{res}{space 2}-.1961716{col 28}{space 2} .0639899{col 39}{space 1}   -3.07{col 48}{space 3}0.003{col 56}{space 4}-.3225161{col 69}{space 3}-.0698271
+{txt}{space 9}3169  {c |}{col 16}{res}{space 2} .1670387{col 28}{space 2} .0639899{col 39}{space 1}    2.61{col 48}{space 3}0.010{col 56}{space 4} .0406942{col 69}{space 3} .2933832
+{txt}{space 9}3170  {c |}{col 16}{res}{space 2} .5429636{col 28}{space 2} .0639899{col 39}{space 1}    8.49{col 48}{space 3}0.000{col 56}{space 4}  .416619{col 69}{space 3} .6693081
+{txt}{space 9}3171  {c |}{col 16}{res}{space 2} .8499198{col 28}{space 2} .0639899{col 39}{space 1}   13.28{col 48}{space 3}0.000{col 56}{space 4} .7235753{col 69}{space 3} .9762644
+{txt}{space 9}3172  {c |}{col 16}{res}{space 2} 1.607354{col 28}{space 2}  .097773{col 39}{space 1}   16.44{col 48}{space 3}0.000{col 56}{space 4} 1.414307{col 69}{space 3} 1.800402
+{txt}{space 9}3173  {c |}{col 16}{res}{space 2} 1.792187{col 28}{space 2} .0954109{col 39}{space 1}   18.78{col 48}{space 3}0.000{col 56}{space 4} 1.603804{col 69}{space 3} 1.980571
+{txt}{space 9}3174  {c |}{col 16}{res}{space 2} 1.651936{col 28}{space 2} .0960867{col 39}{space 1}   17.19{col 48}{space 3}0.000{col 56}{space 4} 1.462218{col 69}{space 3} 1.841654
+{txt}{space 9}3175  {c |}{col 16}{res}{space 2} 1.522411{col 28}{space 2} .0960867{col 39}{space 1}   15.84{col 48}{space 3}0.000{col 56}{space 4} 1.332693{col 69}{space 3} 1.712129
+{txt}{space 14} {c |}
+{space 5}lagvacc_0 {c |}{col 16}{res}{space 2} .6761747{col 28}{space 2}  .087064{col 39}{space 1}    7.77{col 48}{space 3}0.000{col 56}{space 4} .5042716{col 69}{space 3} .8480778
+{txt}{space 2}lagvacc_0_10 {c |}{col 16}{res}{space 2} .2211554{col 28}{space 2}  .065512{col 39}{space 1}    3.38{col 48}{space 3}0.001{col 56}{space 4} .0918055{col 69}{space 3} .3505053
+{txt}{space 1}lagvacc_10_20 {c |}{col 16}{res}{space 2} .1330791{col 28}{space 2} .0710796{col 39}{space 1}    1.87{col 48}{space 3}0.063{col 56}{space 4}-.0072637{col 69}{space 3} .2734219
+{txt}lagvacc_20_100 {c |}{col 16}{res}{space 2}        0{col 28}{txt}  (omitted)
+{space 9}_cons {c |}{col 16}{res}{space 2} 7.191603{col 28}{space 2} .1121819{col 39}{space 1}   64.11{col 48}{space 3}0.000{col 56}{space 4} 6.970106{col 69}{space 3}   7.4131
+{txt}{hline 15}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. rvfplot
+{res}
+{com}. biplot cases_log lagvacc_per age week lagvacc_0 lagvacc_0_10 lagvacc_10_20 lagvacc_20_100
+{res}
+{txt}Biplot of {res:198} observations and {res:8} variables
+
+    Explained variance by component 1 {res} 0.8606
+{txt}    Explained variance by component 2 {res} 0.1129
+{txt}             Total explained variance {res} 0.9735
+
+{com}. regress cases_log i.age i.week lagvacc_0 lagvacc_0_10 lagvacc_1~20 lagvacc_~100
+{p 0 6 2}{txt}note: lagvacc_20_100 omitted because of collinearity{p_end}
+
+      Source {c |}       SS           df       MS      Number of obs   ={res}       198
+{txt}{hline 13}{c +}{hline 34}   F(32, 165)      = {res}   402.69
+{txt}       Model {c |} {res} 237.439432        32  7.41998224   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res}  3.0403171       165  .018426164   {txt}R-squared       ={res}    0.9874
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.9849
+{txt}       Total {c |} {res} 240.479749       197  1.22070938   {txt}Root MSE        =   {res} .13574
+
+{txt}{hline 15}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}     cases_log{col 16}{c |}      Coef.{col 28}   Std. Err.{col 40}      t{col 48}   P>|t|{col 56}     [95% Con{col 69}f. Interval]
+{hline 15}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 11}age {c |}
+{space 8}15-19  {c |}{col 16}{res}{space 2}-.3588792{col 28}{space 2} .0438842{col 39}{space 1}   -8.18{col 48}{space 3}0.000{col 56}{space 4}-.4455261{col 69}{space 3}-.2722322
+{txt}{space 8}20-29  {c |}{col 16}{res}{space 2} .0466429{col 28}{space 2} .0438842{col 39}{space 1}    1.06{col 48}{space 3}0.289{col 56}{space 4} -.040004{col 69}{space 3} .1332899
+{txt}{space 8}30-39  {c |}{col 16}{res}{space 2}-.2207126{col 28}{space 2} .0436532{col 39}{space 1}   -5.06{col 48}{space 3}0.000{col 56}{space 4}-.3069034{col 69}{space 3}-.1345217
+{txt}{space 8}40-49  {c |}{col 16}{res}{space 2}-.3067294{col 28}{space 2} .0434309{col 39}{space 1}   -7.06{col 48}{space 3}0.000{col 56}{space 4}-.3924813{col 69}{space 3}-.2209774
+{txt}{space 8}50-59  {c |}{col 16}{res}{space 2}-.5753782{col 28}{space 2} .0434309{col 39}{space 1}  -13.25{col 48}{space 3}0.000{col 56}{space 4}-.6611302{col 69}{space 3}-.4896263
+{txt}{space 8}60-69  {c |}{col 16}{res}{space 2}-.9478091{col 28}{space 2} .0436201{col 39}{space 1}  -21.73{col 48}{space 3}0.000{col 56}{space 4}-1.033935{col 69}{space 3}-.8616835
+{txt}{space 8}70-79  {c |}{col 16}{res}{space 2}-1.606745{col 28}{space 2} .0436201{col 39}{space 1}  -36.83{col 48}{space 3}0.000{col 56}{space 4}-1.692871{col 69}{space 3} -1.52062
+{txt}{space 10}80+  {c |}{col 16}{res}{space 2}-1.983133{col 28}{space 2} .0436201{col 39}{space 1}  -45.46{col 48}{space 3}0.000{col 56}{space 4}-2.069258{col 69}{space 3}-1.897007
+{txt}{space 14} {c |}
+{space 10}week {c |}
+{space 9}3155  {c |}{col 16}{res}{space 2} .3871146{col 28}{space 2} .0639899{col 39}{space 1}    6.05{col 48}{space 3}0.000{col 56}{space 4} .2607701{col 69}{space 3} .5134591
+{txt}{space 9}3156  {c |}{col 16}{res}{space 2} .6999702{col 28}{space 2} .0639899{col 39}{space 1}   10.94{col 48}{space 3}0.000{col 56}{space 4} .5736257{col 69}{space 3} .8263147
+{txt}{space 9}3157  {c |}{col 16}{res}{space 2} 1.017811{col 28}{space 2} .0639899{col 39}{space 1}   15.91{col 48}{space 3}0.000{col 56}{space 4} .8914665{col 69}{space 3} 1.144155
+{txt}{space 9}3158  {c |}{col 16}{res}{space 2} .9974344{col 28}{space 2} .0639899{col 39}{space 1}   15.59{col 48}{space 3}0.000{col 56}{space 4} .8710898{col 69}{space 3} 1.123779
+{txt}{space 9}3159  {c |}{col 16}{res}{space 2} .6502206{col 28}{space 2} .0639899{col 39}{space 1}   10.16{col 48}{space 3}0.000{col 56}{space 4}  .523876{col 69}{space 3} .7765651
+{txt}{space 9}3160  {c |}{col 16}{res}{space 2}-.1001395{col 28}{space 2} .0639899{col 39}{space 1}   -1.56{col 48}{space 3}0.120{col 56}{space 4} -.226484{col 69}{space 3}  .026205
+{txt}{space 9}3161  {c |}{col 16}{res}{space 2}-.7260257{col 28}{space 2} .0639899{col 39}{space 1}  -11.35{col 48}{space 3}0.000{col 56}{space 4}-.8523702{col 69}{space 3}-.5996812
+{txt}{space 9}3162  {c |}{col 16}{res}{space 2}-1.147822{col 28}{space 2} .0639899{col 39}{space 1}  -17.94{col 48}{space 3}0.000{col 56}{space 4}-1.274166{col 69}{space 3}-1.021477
+{txt}{space 9}3163  {c |}{col 16}{res}{space 2}-1.164281{col 28}{space 2} .0639899{col 39}{space 1}  -18.19{col 48}{space 3}0.000{col 56}{space 4}-1.290625{col 69}{space 3}-1.037936
+{txt}{space 9}3164  {c |}{col 16}{res}{space 2}-1.148024{col 28}{space 2} .0639899{col 39}{space 1}  -17.94{col 48}{space 3}0.000{col 56}{space 4}-1.274369{col 69}{space 3} -1.02168
+{txt}{space 9}3165  {c |}{col 16}{res}{space 2}-1.058696{col 28}{space 2} .0639899{col 39}{space 1}  -16.54{col 48}{space 3}0.000{col 56}{space 4} -1.18504{col 69}{space 3}-.9323511
+{txt}{space 9}3166  {c |}{col 16}{res}{space 2}-.8599854{col 28}{space 2} .0639899{col 39}{space 1}  -13.44{col 48}{space 3}0.000{col 56}{space 4}-.9863299{col 69}{space 3}-.7336409
+{txt}{space 9}3167  {c |}{col 16}{res}{space 2}-.4608992{col 28}{space 2} .0639899{col 39}{space 1}   -7.20{col 48}{space 3}0.000{col 56}{space 4}-.5872438{col 69}{space 3}-.3345547
+{txt}{space 9}3168  {c |}{col 16}{res}{space 2}-.1961716{col 28}{space 2} .0639899{col 39}{space 1}   -3.07{col 48}{space 3}0.003{col 56}{space 4}-.3225161{col 69}{space 3}-.0698271
+{txt}{space 9}3169  {c |}{col 16}{res}{space 2} .1670387{col 28}{space 2} .0639899{col 39}{space 1}    2.61{col 48}{space 3}0.010{col 56}{space 4} .0406942{col 69}{space 3} .2933832
+{txt}{space 9}3170  {c |}{col 16}{res}{space 2} .5429636{col 28}{space 2} .0639899{col 39}{space 1}    8.49{col 48}{space 3}0.000{col 56}{space 4}  .416619{col 69}{space 3} .6693081
+{txt}{space 9}3171  {c |}{col 16}{res}{space 2} .8499198{col 28}{space 2} .0639899{col 39}{space 1}   13.28{col 48}{space 3}0.000{col 56}{space 4} .7235753{col 69}{space 3} .9762644
+{txt}{space 9}3172  {c |}{col 16}{res}{space 2} 1.607354{col 28}{space 2}  .097773{col 39}{space 1}   16.44{col 48}{space 3}0.000{col 56}{space 4} 1.414307{col 69}{space 3} 1.800402
+{txt}{space 9}3173  {c |}{col 16}{res}{space 2} 1.792187{col 28}{space 2} .0954109{col 39}{space 1}   18.78{col 48}{space 3}0.000{col 56}{space 4} 1.603804{col 69}{space 3} 1.980571
+{txt}{space 9}3174  {c |}{col 16}{res}{space 2} 1.651936{col 28}{space 2} .0960867{col 39}{space 1}   17.19{col 48}{space 3}0.000{col 56}{space 4} 1.462218{col 69}{space 3} 1.841654
+{txt}{space 9}3175  {c |}{col 16}{res}{space 2} 1.522411{col 28}{space 2} .0960867{col 39}{space 1}   15.84{col 48}{space 3}0.000{col 56}{space 4} 1.332693{col 69}{space 3} 1.712129
+{txt}{space 14} {c |}
+{space 5}lagvacc_0 {c |}{col 16}{res}{space 2} .6761747{col 28}{space 2}  .087064{col 39}{space 1}    7.77{col 48}{space 3}0.000{col 56}{space 4} .5042716{col 69}{space 3} .8480778
+{txt}{space 2}lagvacc_0_10 {c |}{col 16}{res}{space 2} .2211554{col 28}{space 2}  .065512{col 39}{space 1}    3.38{col 48}{space 3}0.001{col 56}{space 4} .0918055{col 69}{space 3} .3505053
+{txt}{space 1}lagvacc_10_20 {c |}{col 16}{res}{space 2} .1330791{col 28}{space 2} .0710796{col 39}{space 1}    1.87{col 48}{space 3}0.063{col 56}{space 4}-.0072637{col 69}{space 3} .2734219
+{txt}lagvacc_20_100 {c |}{col 16}{res}{space 2}        0{col 28}{txt}  (omitted)
+{space 9}_cons {c |}{col 16}{res}{space 2} 7.191603{col 28}{space 2} .1121819{col 39}{space 1}   64.11{col 48}{space 3}0.000{col 56}{space 4} 6.970106{col 69}{space 3}   7.4131
+{txt}{hline 15}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. rvfplot
+{res}
+{com}. regress cases_log i.age lagvacc_0_10 lagvacc_1~20 lagvacc_~100 i.week
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       198
+{txt}{hline 13}{c +}{hline 34}   F(32, 165)      = {res}   402.69
+{txt}       Model {c |} {res} 237.439432        32  7.41998224   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res}  3.0403171       165  .018426164   {txt}R-squared       ={res}    0.9874
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.9849
+{txt}       Total {c |} {res} 240.479749       197  1.22070938   {txt}Root MSE        =   {res} .13574
+
+{txt}{hline 15}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}     cases_log{col 16}{c |}      Coef.{col 28}   Std. Err.{col 40}      t{col 48}   P>|t|{col 56}     [95% Con{col 69}f. Interval]
+{hline 15}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 11}age {c |}
+{space 8}15-19  {c |}{col 16}{res}{space 2}-.3588792{col 28}{space 2} .0438842{col 39}{space 1}   -8.18{col 48}{space 3}0.000{col 56}{space 4}-.4455261{col 69}{space 3}-.2722322
+{txt}{space 8}20-29  {c |}{col 16}{res}{space 2} .0466429{col 28}{space 2} .0438842{col 39}{space 1}    1.06{col 48}{space 3}0.289{col 56}{space 4} -.040004{col 69}{space 3} .1332899
+{txt}{space 8}30-39  {c |}{col 16}{res}{space 2}-.2207126{col 28}{space 2} .0436532{col 39}{space 1}   -5.06{col 48}{space 3}0.000{col 56}{space 4}-.3069034{col 69}{space 3}-.1345217
+{txt}{space 8}40-49  {c |}{col 16}{res}{space 2}-.3067294{col 28}{space 2} .0434309{col 39}{space 1}   -7.06{col 48}{space 3}0.000{col 56}{space 4}-.3924813{col 69}{space 3}-.2209774
+{txt}{space 8}50-59  {c |}{col 16}{res}{space 2}-.5753782{col 28}{space 2} .0434309{col 39}{space 1}  -13.25{col 48}{space 3}0.000{col 56}{space 4}-.6611302{col 69}{space 3}-.4896263
+{txt}{space 8}60-69  {c |}{col 16}{res}{space 2}-.9478091{col 28}{space 2} .0436201{col 39}{space 1}  -21.73{col 48}{space 3}0.000{col 56}{space 4}-1.033935{col 69}{space 3}-.8616835
+{txt}{space 8}70-79  {c |}{col 16}{res}{space 2}-1.606745{col 28}{space 2} .0436201{col 39}{space 1}  -36.83{col 48}{space 3}0.000{col 56}{space 4}-1.692871{col 69}{space 3} -1.52062
+{txt}{space 10}80+  {c |}{col 16}{res}{space 2}-1.983133{col 28}{space 2} .0436201{col 39}{space 1}  -45.46{col 48}{space 3}0.000{col 56}{space 4}-2.069258{col 69}{space 3}-1.897007
+{txt}{space 14} {c |}
+{space 2}lagvacc_0_10 {c |}{col 16}{res}{space 2}-.4550193{col 28}{space 2} .0870872{col 39}{space 1}   -5.22{col 48}{space 3}0.000{col 56}{space 4}-.6269682{col 69}{space 3}-.2830704
+{txt}{space 1}lagvacc_10_20 {c |}{col 16}{res}{space 2}-.5430955{col 28}{space 2} .0926803{col 39}{space 1}   -5.86{col 48}{space 3}0.000{col 56}{space 4}-.7260877{col 69}{space 3}-.3601034
+{txt}lagvacc_20_100 {c |}{col 16}{res}{space 2}-.6761747{col 28}{space 2}  .087064{col 39}{space 1}   -7.77{col 48}{space 3}0.000{col 56}{space 4}-.8480778{col 69}{space 3}-.5042716
+{txt}{space 14} {c |}
+{space 10}week {c |}
+{space 9}3155  {c |}{col 16}{res}{space 2} .3871146{col 28}{space 2} .0639899{col 39}{space 1}    6.05{col 48}{space 3}0.000{col 56}{space 4} .2607701{col 69}{space 3} .5134591
+{txt}{space 9}3156  {c |}{col 16}{res}{space 2} .6999702{col 28}{space 2} .0639899{col 39}{space 1}   10.94{col 48}{space 3}0.000{col 56}{space 4} .5736257{col 69}{space 3} .8263147
+{txt}{space 9}3157  {c |}{col 16}{res}{space 2} 1.017811{col 28}{space 2} .0639899{col 39}{space 1}   15.91{col 48}{space 3}0.000{col 56}{space 4} .8914665{col 69}{space 3} 1.144155
+{txt}{space 9}3158  {c |}{col 16}{res}{space 2} .9974344{col 28}{space 2} .0639899{col 39}{space 1}   15.59{col 48}{space 3}0.000{col 56}{space 4} .8710898{col 69}{space 3} 1.123779
+{txt}{space 9}3159  {c |}{col 16}{res}{space 2} .6502206{col 28}{space 2} .0639899{col 39}{space 1}   10.16{col 48}{space 3}0.000{col 56}{space 4}  .523876{col 69}{space 3} .7765651
+{txt}{space 9}3160  {c |}{col 16}{res}{space 2}-.1001395{col 28}{space 2} .0639899{col 39}{space 1}   -1.56{col 48}{space 3}0.120{col 56}{space 4} -.226484{col 69}{space 3}  .026205
+{txt}{space 9}3161  {c |}{col 16}{res}{space 2}-.7260257{col 28}{space 2} .0639899{col 39}{space 1}  -11.35{col 48}{space 3}0.000{col 56}{space 4}-.8523702{col 69}{space 3}-.5996812
+{txt}{space 9}3162  {c |}{col 16}{res}{space 2}-1.147822{col 28}{space 2} .0639899{col 39}{space 1}  -17.94{col 48}{space 3}0.000{col 56}{space 4}-1.274166{col 69}{space 3}-1.021477
+{txt}{space 9}3163  {c |}{col 16}{res}{space 2}-1.164281{col 28}{space 2} .0639899{col 39}{space 1}  -18.19{col 48}{space 3}0.000{col 56}{space 4}-1.290625{col 69}{space 3}-1.037936
+{txt}{space 9}3164  {c |}{col 16}{res}{space 2}-1.148024{col 28}{space 2} .0639899{col 39}{space 1}  -17.94{col 48}{space 3}0.000{col 56}{space 4}-1.274369{col 69}{space 3} -1.02168
+{txt}{space 9}3165  {c |}{col 16}{res}{space 2}-1.058696{col 28}{space 2} .0639899{col 39}{space 1}  -16.54{col 48}{space 3}0.000{col 56}{space 4} -1.18504{col 69}{space 3}-.9323511
+{txt}{space 9}3166  {c |}{col 16}{res}{space 2}-.8599854{col 28}{space 2} .0639899{col 39}{space 1}  -13.44{col 48}{space 3}0.000{col 56}{space 4}-.9863299{col 69}{space 3}-.7336409
+{txt}{space 9}3167  {c |}{col 16}{res}{space 2}-.4608992{col 28}{space 2} .0639899{col 39}{space 1}   -7.20{col 48}{space 3}0.000{col 56}{space 4}-.5872438{col 69}{space 3}-.3345547
+{txt}{space 9}3168  {c |}{col 16}{res}{space 2}-.1961716{col 28}{space 2} .0639899{col 39}{space 1}   -3.07{col 48}{space 3}0.003{col 56}{space 4}-.3225161{col 69}{space 3}-.0698271
+{txt}{space 9}3169  {c |}{col 16}{res}{space 2} .1670387{col 28}{space 2} .0639899{col 39}{space 1}    2.61{col 48}{space 3}0.010{col 56}{space 4} .0406942{col 69}{space 3} .2933832
+{txt}{space 9}3170  {c |}{col 16}{res}{space 2} .5429636{col 28}{space 2} .0639899{col 39}{space 1}    8.49{col 48}{space 3}0.000{col 56}{space 4}  .416619{col 69}{space 3} .6693081
+{txt}{space 9}3171  {c |}{col 16}{res}{space 2} .8499198{col 28}{space 2} .0639899{col 39}{space 1}   13.28{col 48}{space 3}0.000{col 56}{space 4} .7235753{col 69}{space 3} .9762644
+{txt}{space 9}3172  {c |}{col 16}{res}{space 2} 1.607354{col 28}{space 2}  .097773{col 39}{space 1}   16.44{col 48}{space 3}0.000{col 56}{space 4} 1.414307{col 69}{space 3} 1.800402
+{txt}{space 9}3173  {c |}{col 16}{res}{space 2} 1.792187{col 28}{space 2} .0954109{col 39}{space 1}   18.78{col 48}{space 3}0.000{col 56}{space 4} 1.603804{col 69}{space 3} 1.980571
+{txt}{space 9}3174  {c |}{col 16}{res}{space 2} 1.651936{col 28}{space 2} .0960867{col 39}{space 1}   17.19{col 48}{space 3}0.000{col 56}{space 4} 1.462218{col 69}{space 3} 1.841654
+{txt}{space 9}3175  {c |}{col 16}{res}{space 2} 1.522411{col 28}{space 2} .0960867{col 39}{space 1}   15.84{col 48}{space 3}0.000{col 56}{space 4} 1.332693{col 69}{space 3} 1.712129
+{txt}{space 14} {c |}
+{space 9}_cons {c |}{col 16}{res}{space 2} 7.867777{col 28}{space 2} .0543809{col 39}{space 1}  144.68{col 48}{space 3}0.000{col 56}{space 4} 7.760405{col 69}{space 3}  7.97515
+{txt}{hline 15}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. rvfplot
+{res}
+{com}. regress cases_log lagvacc_per lagvacc_per2 i.age i.week
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       198
+{txt}{hline 13}{c +}{hline 34}   F(31, 166)      = {res}   369.80
+{txt}       Model {c |} {res} 237.047219        31  7.64668447   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 3.43252999       166  .020677892   {txt}R-squared       ={res}    0.9857
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.9831
+{txt}       Total {c |} {res} 240.479749       197  1.22070938   {txt}Root MSE        =   {res}  .1438
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}   cases_log{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 1}lagvacc_per {c |}{col 14}{res}{space 2}-.0134144{col 26}{space 2} .0036669{col 37}{space 1}   -3.66{col 46}{space 3}0.000{col 54}{space 4}-.0206542{col 67}{space 3}-.0061746
+{txt}lagvacc_per2 {c |}{col 14}{res}{space 2} .0000967{col 26}{space 2} .0000446{col 37}{space 1}    2.17{col 46}{space 3}0.032{col 54}{space 4} 8.53e-06{col 67}{space 3} .0001848
+{txt}{space 12} {c |}
+{space 9}age {c |}
+{space 6}15-19  {c |}{col 14}{res}{space 2} -.437979{col 26}{space 2} .0433679{col 37}{space 1}  -10.10{col 46}{space 3}0.000{col 54}{space 4}-.5236027{col 67}{space 3}-.3523553
+{txt}{space 6}20-29  {c |}{col 14}{res}{space 2}-.0233398{col 26}{space 2} .0434865{col 37}{space 1}   -0.54{col 46}{space 3}0.592{col 54}{space 4}-.1091976{col 67}{space 3} .0625181
+{txt}{space 6}30-39  {c |}{col 14}{res}{space 2}-.2922038{col 26}{space 2} .0436402{col 37}{space 1}   -6.70{col 46}{space 3}0.000{col 54}{space 4}-.3783652{col 67}{space 3}-.2060423
+{txt}{space 6}40-49  {c |}{col 14}{res}{space 2}-.3828524{col 26}{space 2} .0440059{col 37}{space 1}   -8.70{col 46}{space 3}0.000{col 54}{space 4}-.4697358{col 67}{space 3} -.295969
+{txt}{space 6}50-59  {c |}{col 14}{res}{space 2}-.6363954{col 26}{space 2} .0445023{col 37}{space 1}  -14.30{col 46}{space 3}0.000{col 54}{space 4}-.7242589{col 67}{space 3}-.5485319
+{txt}{space 6}60-69  {c |}{col 14}{res}{space 2}-.9975742{col 26}{space 2} .0449908{col 37}{space 1}  -22.17{col 46}{space 3}0.000{col 54}{space 4}-1.086402{col 67}{space 3}-.9087462
+{txt}{space 6}70-79  {c |}{col 14}{res}{space 2}-1.653272{col 26}{space 2} .0449547{col 37}{space 1}  -36.78{col 46}{space 3}0.000{col 54}{space 4}-1.742028{col 67}{space 3}-1.564515
+{txt}{space 8}80+  {c |}{col 14}{res}{space 2}-2.032193{col 26}{space 2} .0448102{col 37}{space 1}  -45.35{col 46}{space 3}0.000{col 54}{space 4}-2.120664{col 67}{space 3}-1.943722
+{txt}{space 12} {c |}
+{space 8}week {c |}
+{space 7}3155  {c |}{col 14}{res}{space 2} .3871146{col 26}{space 2} .0677871{col 37}{space 1}    5.71{col 46}{space 3}0.000{col 54}{space 4} .2532787{col 67}{space 3} .5209506
+{txt}{space 7}3156  {c |}{col 14}{res}{space 2} .6999702{col 26}{space 2} .0677871{col 37}{space 1}   10.33{col 46}{space 3}0.000{col 54}{space 4} .5661343{col 67}{space 3} .8338061
+{txt}{space 7}3157  {c |}{col 14}{res}{space 2} 1.017811{col 26}{space 2} .0677871{col 37}{space 1}   15.01{col 46}{space 3}0.000{col 54}{space 4} .8839751{col 67}{space 3} 1.151647
+{txt}{space 7}3158  {c |}{col 14}{res}{space 2} .9974344{col 26}{space 2} .0677871{col 37}{space 1}   14.71{col 46}{space 3}0.000{col 54}{space 4} .8635984{col 67}{space 3}  1.13127
+{txt}{space 7}3159  {c |}{col 14}{res}{space 2} .6502206{col 26}{space 2} .0677871{col 37}{space 1}    9.59{col 46}{space 3}0.000{col 54}{space 4} .5163846{col 67}{space 3} .7840565
+{txt}{space 7}3160  {c |}{col 14}{res}{space 2}-.1001395{col 26}{space 2} .0677871{col 37}{space 1}   -1.48{col 46}{space 3}0.141{col 54}{space 4}-.2339754{col 67}{space 3} .0336964
+{txt}{space 7}3161  {c |}{col 14}{res}{space 2}-.7260257{col 26}{space 2} .0677871{col 37}{space 1}  -10.71{col 46}{space 3}0.000{col 54}{space 4}-.8598616{col 67}{space 3}-.5921898
+{txt}{space 7}3162  {c |}{col 14}{res}{space 2}-1.147822{col 26}{space 2} .0677871{col 37}{space 1}  -16.93{col 46}{space 3}0.000{col 54}{space 4}-1.281658{col 67}{space 3}-1.013986
+{txt}{space 7}3163  {c |}{col 14}{res}{space 2}-1.164281{col 26}{space 2} .0677871{col 37}{space 1}  -17.18{col 46}{space 3}0.000{col 54}{space 4}-1.298117{col 67}{space 3}-1.030445
+{txt}{space 7}3164  {c |}{col 14}{res}{space 2}-1.148024{col 26}{space 2} .0677871{col 37}{space 1}  -16.94{col 46}{space 3}0.000{col 54}{space 4} -1.28186{col 67}{space 3}-1.014188
+{txt}{space 7}3165  {c |}{col 14}{res}{space 2}-1.058696{col 26}{space 2} .0677871{col 37}{space 1}  -15.62{col 46}{space 3}0.000{col 54}{space 4}-1.192532{col 67}{space 3}-.9248597
+{txt}{space 7}3166  {c |}{col 14}{res}{space 2}-.8599854{col 26}{space 2} .0677871{col 37}{space 1}  -12.69{col 46}{space 3}0.000{col 54}{space 4}-.9938213{col 67}{space 3}-.7261495
+{txt}{space 7}3167  {c |}{col 14}{res}{space 2}-.4608992{col 26}{space 2} .0677871{col 37}{space 1}   -6.80{col 46}{space 3}0.000{col 54}{space 4}-.5947352{col 67}{space 3}-.3270633
+{txt}{space 7}3168  {c |}{col 14}{res}{space 2}-.1961716{col 26}{space 2} .0677871{col 37}{space 1}   -2.89{col 46}{space 3}0.004{col 54}{space 4}-.3300075{col 67}{space 3}-.0623357
+{txt}{space 7}3169  {c |}{col 14}{res}{space 2} .1670387{col 26}{space 2} .0677871{col 37}{space 1}    2.46{col 46}{space 3}0.015{col 54}{space 4} .0332028{col 67}{space 3} .3008746
+{txt}{space 7}3170  {c |}{col 14}{res}{space 2} .5429636{col 26}{space 2} .0677871{col 37}{space 1}    8.01{col 46}{space 3}0.000{col 54}{space 4} .4091276{col 67}{space 3} .6767995
+{txt}{space 7}3171  {c |}{col 14}{res}{space 2} .8499198{col 26}{space 2} .0677871{col 37}{space 1}   12.54{col 46}{space 3}0.000{col 54}{space 4} .7160839{col 67}{space 3} .9837558
+{txt}{space 7}3172  {c |}{col 14}{res}{space 2}  1.24028{col 26}{space 2} .0699162{col 37}{space 1}   17.74{col 46}{space 3}0.000{col 54}{space 4} 1.102241{col 67}{space 3}  1.37832
+{txt}{space 7}3173  {c |}{col 14}{res}{space 2} 1.490374{col 26}{space 2} .0787203{col 37}{space 1}   18.93{col 46}{space 3}0.000{col 54}{space 4} 1.334952{col 67}{space 3} 1.645796
+{txt}{space 7}3174  {c |}{col 14}{res}{space 2} 1.363721{col 26}{space 2} .0801763{col 37}{space 1}   17.01{col 46}{space 3}0.000{col 54}{space 4} 1.205424{col 67}{space 3} 1.522018
+{txt}{space 7}3175  {c |}{col 14}{res}{space 2} 1.249797{col 26}{space 2} .0812206{col 37}{space 1}   15.39{col 46}{space 3}0.000{col 54}{space 4} 1.089439{col 67}{space 3} 1.410156
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} 7.923674{col 26}{space 2} .0563354{col 37}{space 1}  140.65{col 46}{space 3}0.000{col 54}{space 4} 7.812447{col 67}{space 3}   8.0349
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. rvfplot
+{res}
+{com}. save "/Users/lizzieriese/Desktop/S21/ECO375/Assignment 1/Data/Assignment01_Data_0.dta"
+{err}{p 0 4 2}
+file /Users/lizzieriese/Desktop/S21/ECO375/Assignment 1/Data/Assignment01_Data_0.dta
+already exists
+{p_end}
+{txt}{search r(602), local:r(602);}
+
+{com}. regress cases_log lagvacc_per i.age i.week
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       198
+{txt}{hline 13}{c +}{hline 34}   F(30, 167)      = {res}   373.71
+{txt}       Model {c |} {res} 236.950247        30  7.89834158   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 3.52950134       167  .021134739   {txt}R-squared       ={res}    0.9853
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.9827
+{txt}       Total {c |} {res} 240.479749       197  1.22070938   {txt}Root MSE        =   {res} .14538
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}   cases_log{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 1}lagvacc_per {c |}{col 14}{res}{space 2}-.0057974{col 26}{space 2} .0010479{col 37}{space 1}   -5.53{col 46}{space 3}0.000{col 54}{space 4}-.0078663{col 67}{space 3}-.0037285
+{txt}{space 12} {c |}
+{space 9}age {c |}
+{space 6}15-19  {c |}{col 14}{res}{space 2}-.4400148{col 26}{space 2}  .043834{col 37}{space 1}  -10.04{col 46}{space 3}0.000{col 54}{space 4}-.5265551{col 67}{space 3}-.3534745
+{txt}{space 6}20-29  {c |}{col 14}{res}{space 2}-.0302479{col 26}{space 2} .0438458{col 37}{space 1}   -0.69{col 46}{space 3}0.491{col 54}{space 4}-.1168114{col 67}{space 3} .0563156
+{txt}{space 6}30-39  {c |}{col 14}{res}{space 2}-.3023669{col 26}{space 2} .0438638{col 37}{space 1}   -6.89{col 46}{space 3}0.000{col 54}{space 4}-.3889659{col 67}{space 3}-.2157678
+{txt}{space 6}40-49  {c |}{col 14}{res}{space 2}-.3980066{col 26}{space 2} .0439233{col 37}{space 1}   -9.06{col 46}{space 3}0.000{col 54}{space 4} -.484723{col 67}{space 3}-.3112901
+{txt}{space 6}50-59  {c |}{col 14}{res}{space 2}-.6554999{col 26}{space 2} .0440983{col 37}{space 1}  -14.86{col 46}{space 3}0.000{col 54}{space 4} -.742562{col 67}{space 3}-.5684378
+{txt}{space 6}60-69  {c |}{col 14}{res}{space 2}-1.015151{col 26}{space 2} .0447388{col 37}{space 1}  -22.69{col 46}{space 3}0.000{col 54}{space 4}-1.103478{col 67}{space 3}-.9268251
+{txt}{space 6}70-79  {c |}{col 14}{res}{space 2} -1.65868{col 26}{space 2} .0453784{col 37}{space 1}  -36.55{col 46}{space 3}0.000{col 54}{space 4}-1.748269{col 67}{space 3} -1.56909
+{txt}{space 8}80+  {c |}{col 14}{res}{space 2}-2.042018{col 26}{space 2} .0450697{col 37}{space 1}  -45.31{col 46}{space 3}0.000{col 54}{space 4}-2.130998{col 67}{space 3}-1.953038
+{txt}{space 12} {c |}
+{space 8}week {c |}
+{space 7}3155  {c |}{col 14}{res}{space 2} .3871146{col 26}{space 2} .0685318{col 37}{space 1}    5.65{col 46}{space 3}0.000{col 54}{space 4} .2518143{col 67}{space 3}  .522415
+{txt}{space 7}3156  {c |}{col 14}{res}{space 2} .6999702{col 26}{space 2} .0685318{col 37}{space 1}   10.21{col 46}{space 3}0.000{col 54}{space 4} .5646698{col 67}{space 3} .8352705
+{txt}{space 7}3157  {c |}{col 14}{res}{space 2} 1.017811{col 26}{space 2} .0685318{col 37}{space 1}   14.85{col 46}{space 3}0.000{col 54}{space 4} .8825106{col 67}{space 3} 1.153111
+{txt}{space 7}3158  {c |}{col 14}{res}{space 2} .9974344{col 26}{space 2} .0685318{col 37}{space 1}   14.55{col 46}{space 3}0.000{col 54}{space 4}  .862134{col 67}{space 3} 1.132735
+{txt}{space 7}3159  {c |}{col 14}{res}{space 2} .6502206{col 26}{space 2} .0685318{col 37}{space 1}    9.49{col 46}{space 3}0.000{col 54}{space 4} .5149202{col 67}{space 3} .7855209
+{txt}{space 7}3160  {c |}{col 14}{res}{space 2}-.1001395{col 26}{space 2} .0685318{col 37}{space 1}   -1.46{col 46}{space 3}0.146{col 54}{space 4}-.2354399{col 67}{space 3} .0351608
+{txt}{space 7}3161  {c |}{col 14}{res}{space 2}-.7260257{col 26}{space 2} .0685318{col 37}{space 1}  -10.59{col 46}{space 3}0.000{col 54}{space 4} -.861326{col 67}{space 3}-.5907253
+{txt}{space 7}3162  {c |}{col 14}{res}{space 2}-1.147822{col 26}{space 2} .0685318{col 37}{space 1}  -16.75{col 46}{space 3}0.000{col 54}{space 4}-1.283122{col 67}{space 3}-1.012522
+{txt}{space 7}3163  {c |}{col 14}{res}{space 2}-1.164281{col 26}{space 2} .0685318{col 37}{space 1}  -16.99{col 46}{space 3}0.000{col 54}{space 4}-1.299581{col 67}{space 3} -1.02898
+{txt}{space 7}3164  {c |}{col 14}{res}{space 2}-1.148024{col 26}{space 2} .0685318{col 37}{space 1}  -16.75{col 46}{space 3}0.000{col 54}{space 4}-1.283325{col 67}{space 3}-1.012724
+{txt}{space 7}3165  {c |}{col 14}{res}{space 2}-1.058696{col 26}{space 2} .0685318{col 37}{space 1}  -15.45{col 46}{space 3}0.000{col 54}{space 4}-1.193996{col 67}{space 3}-.9233953
+{txt}{space 7}3166  {c |}{col 14}{res}{space 2}-.8599854{col 26}{space 2} .0685318{col 37}{space 1}  -12.55{col 46}{space 3}0.000{col 54}{space 4}-.9952858{col 67}{space 3} -.724685
+{txt}{space 7}3167  {c |}{col 14}{res}{space 2}-.4608992{col 26}{space 2} .0685318{col 37}{space 1}   -6.73{col 46}{space 3}0.000{col 54}{space 4}-.5961996{col 67}{space 3}-.3255989
+{txt}{space 7}3168  {c |}{col 14}{res}{space 2}-.1961716{col 26}{space 2} .0685318{col 37}{space 1}   -2.86{col 46}{space 3}0.005{col 54}{space 4} -.331472{col 67}{space 3}-.0608712
+{txt}{space 7}3169  {c |}{col 14}{res}{space 2} .1670387{col 26}{space 2} .0685318{col 37}{space 1}    2.44{col 46}{space 3}0.016{col 54}{space 4} .0317383{col 67}{space 3} .3023391
+{txt}{space 7}3170  {c |}{col 14}{res}{space 2} .5429636{col 26}{space 2} .0685318{col 37}{space 1}    7.92{col 46}{space 3}0.000{col 54}{space 4} .4076632{col 67}{space 3} .6782639
+{txt}{space 7}3171  {c |}{col 14}{res}{space 2} .8499198{col 26}{space 2} .0685318{col 37}{space 1}   12.40{col 46}{space 3}0.000{col 54}{space 4} .7146195{col 67}{space 3} .9852202
+{txt}{space 7}3172  {c |}{col 14}{res}{space 2} 1.205299{col 26}{space 2} .0687719{col 37}{space 1}   17.53{col 46}{space 3}0.000{col 54}{space 4} 1.069524{col 67}{space 3} 1.341073
+{txt}{space 7}3173  {c |}{col 14}{res}{space 2}  1.41814{col 26}{space 2} .0720875{col 37}{space 1}   19.67{col 46}{space 3}0.000{col 54}{space 4}  1.27582{col 67}{space 3}  1.56046
+{txt}{space 7}3174  {c |}{col 14}{res}{space 2} 1.309996{col 26}{space 2} .0770791{col 37}{space 1}   17.00{col 46}{space 3}0.000{col 54}{space 4} 1.157821{col 67}{space 3} 1.462171
+{txt}{space 7}3175  {c |}{col 14}{res}{space 2} 1.200086{col 26}{space 2}  .078765{col 37}{space 1}   15.24{col 46}{space 3}0.000{col 54}{space 4} 1.044582{col 67}{space 3} 1.355589
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} 7.933249{col 26}{space 2} .0567787{col 37}{space 1}  139.72{col 46}{space 3}0.000{col 54}{space 4} 7.821152{col 67}{space 3} 8.045345
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. rvfplot
+{res}
+{com}. twoway (scatter cases_log lagvacc_per) (scatter cases_log lagvacc_per2)
+{res}
+{com}. twoway (scatter cases_log lagvacc_per) (scatter cases_log lagvacc_per2)
+{res}
+{com}. twoway (scatter cases_log lagvacc_per) (scatter cases_log lagvacc_per2) (scatter cases_log lagvacc_per2)
+{res}
+{com}. twoway (scatter cases_log lagvacc_per2)
+{res}
+{com}. twoway (line cases_log lagvacc_per)
+{res}
+{com}. twoway (scatter cases_log lagvacc_per2)
+{res}
+{com}. regress cases_log lagvacc_per lagvacc_per2 i.age i.week
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       198
+{txt}{hline 13}{c +}{hline 34}   F(31, 166)      = {res}   369.80
+{txt}       Model {c |} {res} 237.047219        31  7.64668447   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 3.43252999       166  .020677892   {txt}R-squared       ={res}    0.9857
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.9831
+{txt}       Total {c |} {res} 240.479749       197  1.22070938   {txt}Root MSE        =   {res}  .1438
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}   cases_log{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 1}lagvacc_per {c |}{col 14}{res}{space 2}-.0134144{col 26}{space 2} .0036669{col 37}{space 1}   -3.66{col 46}{space 3}0.000{col 54}{space 4}-.0206542{col 67}{space 3}-.0061746
+{txt}lagvacc_per2 {c |}{col 14}{res}{space 2} .0000967{col 26}{space 2} .0000446{col 37}{space 1}    2.17{col 46}{space 3}0.032{col 54}{space 4} 8.53e-06{col 67}{space 3} .0001848
+{txt}{space 12} {c |}
+{space 9}age {c |}
+{space 6}15-19  {c |}{col 14}{res}{space 2} -.437979{col 26}{space 2} .0433679{col 37}{space 1}  -10.10{col 46}{space 3}0.000{col 54}{space 4}-.5236027{col 67}{space 3}-.3523553
+{txt}{space 6}20-29  {c |}{col 14}{res}{space 2}-.0233398{col 26}{space 2} .0434865{col 37}{space 1}   -0.54{col 46}{space 3}0.592{col 54}{space 4}-.1091976{col 67}{space 3} .0625181
+{txt}{space 6}30-39  {c |}{col 14}{res}{space 2}-.2922038{col 26}{space 2} .0436402{col 37}{space 1}   -6.70{col 46}{space 3}0.000{col 54}{space 4}-.3783652{col 67}{space 3}-.2060423
+{txt}{space 6}40-49  {c |}{col 14}{res}{space 2}-.3828524{col 26}{space 2} .0440059{col 37}{space 1}   -8.70{col 46}{space 3}0.000{col 54}{space 4}-.4697358{col 67}{space 3} -.295969
+{txt}{space 6}50-59  {c |}{col 14}{res}{space 2}-.6363954{col 26}{space 2} .0445023{col 37}{space 1}  -14.30{col 46}{space 3}0.000{col 54}{space 4}-.7242589{col 67}{space 3}-.5485319
+{txt}{space 6}60-69  {c |}{col 14}{res}{space 2}-.9975742{col 26}{space 2} .0449908{col 37}{space 1}  -22.17{col 46}{space 3}0.000{col 54}{space 4}-1.086402{col 67}{space 3}-.9087462
+{txt}{space 6}70-79  {c |}{col 14}{res}{space 2}-1.653272{col 26}{space 2} .0449547{col 37}{space 1}  -36.78{col 46}{space 3}0.000{col 54}{space 4}-1.742028{col 67}{space 3}-1.564515
+{txt}{space 8}80+  {c |}{col 14}{res}{space 2}-2.032193{col 26}{space 2} .0448102{col 37}{space 1}  -45.35{col 46}{space 3}0.000{col 54}{space 4}-2.120664{col 67}{space 3}-1.943722
+{txt}{space 12} {c |}
+{space 8}week {c |}
+{space 7}3155  {c |}{col 14}{res}{space 2} .3871146{col 26}{space 2} .0677871{col 37}{space 1}    5.71{col 46}{space 3}0.000{col 54}{space 4} .2532787{col 67}{space 3} .5209506
+{txt}{space 7}3156  {c |}{col 14}{res}{space 2} .6999702{col 26}{space 2} .0677871{col 37}{space 1}   10.33{col 46}{space 3}0.000{col 54}{space 4} .5661343{col 67}{space 3} .8338061
+{txt}{space 7}3157  {c |}{col 14}{res}{space 2} 1.017811{col 26}{space 2} .0677871{col 37}{space 1}   15.01{col 46}{space 3}0.000{col 54}{space 4} .8839751{col 67}{space 3} 1.151647
+{txt}{space 7}3158  {c |}{col 14}{res}{space 2} .9974344{col 26}{space 2} .0677871{col 37}{space 1}   14.71{col 46}{space 3}0.000{col 54}{space 4} .8635984{col 67}{space 3}  1.13127
+{txt}{space 7}3159  {c |}{col 14}{res}{space 2} .6502206{col 26}{space 2} .0677871{col 37}{space 1}    9.59{col 46}{space 3}0.000{col 54}{space 4} .5163846{col 67}{space 3} .7840565
+{txt}{space 7}3160  {c |}{col 14}{res}{space 2}-.1001395{col 26}{space 2} .0677871{col 37}{space 1}   -1.48{col 46}{space 3}0.141{col 54}{space 4}-.2339754{col 67}{space 3} .0336964
+{txt}{space 7}3161  {c |}{col 14}{res}{space 2}-.7260257{col 26}{space 2} .0677871{col 37}{space 1}  -10.71{col 46}{space 3}0.000{col 54}{space 4}-.8598616{col 67}{space 3}-.5921898
+{txt}{space 7}3162  {c |}{col 14}{res}{space 2}-1.147822{col 26}{space 2} .0677871{col 37}{space 1}  -16.93{col 46}{space 3}0.000{col 54}{space 4}-1.281658{col 67}{space 3}-1.013986
+{txt}{space 7}3163  {c |}{col 14}{res}{space 2}-1.164281{col 26}{space 2} .0677871{col 37}{space 1}  -17.18{col 46}{space 3}0.000{col 54}{space 4}-1.298117{col 67}{space 3}-1.030445
+{txt}{space 7}3164  {c |}{col 14}{res}{space 2}-1.148024{col 26}{space 2} .0677871{col 37}{space 1}  -16.94{col 46}{space 3}0.000{col 54}{space 4} -1.28186{col 67}{space 3}-1.014188
+{txt}{space 7}3165  {c |}{col 14}{res}{space 2}-1.058696{col 26}{space 2} .0677871{col 37}{space 1}  -15.62{col 46}{space 3}0.000{col 54}{space 4}-1.192532{col 67}{space 3}-.9248597
+{txt}{space 7}3166  {c |}{col 14}{res}{space 2}-.8599854{col 26}{space 2} .0677871{col 37}{space 1}  -12.69{col 46}{space 3}0.000{col 54}{space 4}-.9938213{col 67}{space 3}-.7261495
+{txt}{space 7}3167  {c |}{col 14}{res}{space 2}-.4608992{col 26}{space 2} .0677871{col 37}{space 1}   -6.80{col 46}{space 3}0.000{col 54}{space 4}-.5947352{col 67}{space 3}-.3270633
+{txt}{space 7}3168  {c |}{col 14}{res}{space 2}-.1961716{col 26}{space 2} .0677871{col 37}{space 1}   -2.89{col 46}{space 3}0.004{col 54}{space 4}-.3300075{col 67}{space 3}-.0623357
+{txt}{space 7}3169  {c |}{col 14}{res}{space 2} .1670387{col 26}{space 2} .0677871{col 37}{space 1}    2.46{col 46}{space 3}0.015{col 54}{space 4} .0332028{col 67}{space 3} .3008746
+{txt}{space 7}3170  {c |}{col 14}{res}{space 2} .5429636{col 26}{space 2} .0677871{col 37}{space 1}    8.01{col 46}{space 3}0.000{col 54}{space 4} .4091276{col 67}{space 3} .6767995
+{txt}{space 7}3171  {c |}{col 14}{res}{space 2} .8499198{col 26}{space 2} .0677871{col 37}{space 1}   12.54{col 46}{space 3}0.000{col 54}{space 4} .7160839{col 67}{space 3} .9837558
+{txt}{space 7}3172  {c |}{col 14}{res}{space 2}  1.24028{col 26}{space 2} .0699162{col 37}{space 1}   17.74{col 46}{space 3}0.000{col 54}{space 4} 1.102241{col 67}{space 3}  1.37832
+{txt}{space 7}3173  {c |}{col 14}{res}{space 2} 1.490374{col 26}{space 2} .0787203{col 37}{space 1}   18.93{col 46}{space 3}0.000{col 54}{space 4} 1.334952{col 67}{space 3} 1.645796
+{txt}{space 7}3174  {c |}{col 14}{res}{space 2} 1.363721{col 26}{space 2} .0801763{col 37}{space 1}   17.01{col 46}{space 3}0.000{col 54}{space 4} 1.205424{col 67}{space 3} 1.522018
+{txt}{space 7}3175  {c |}{col 14}{res}{space 2} 1.249797{col 26}{space 2} .0812206{col 37}{space 1}   15.39{col 46}{space 3}0.000{col 54}{space 4} 1.089439{col 67}{space 3} 1.410156
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} 7.923674{col 26}{space 2} .0563354{col 37}{space 1}  140.65{col 46}{space 3}0.000{col 54}{space 4} 7.812447{col 67}{space 3}   8.0349
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. twoway (scatter cases_log lagvacc_per2)
+{res}
+{com}. twoway (scatter cases_log age.i)
+{err}variable {bf}i{sf} not found
+{txt}{search r(111), local:r(111);}
+
+{com}. twoway (scatter cases_log age)
+{res}
+{com}. twoway (scatter cases_log week)
+{res}
+{com}. sort age
+
+. pwcorr cases_log lagvacc_per lagvacc_per2 i.age i.week
+{err}factor-variable operators not allowed
+{txt}{search r(101), local:r(101);}
+
+{com}. pwcorr lagvacc_per lagvacc_per2 age week
+
+             {txt}{c |} lagvac~r lagvac~2      age     week
+{hline 13}{c +}{hline 36}
+ lagvacc_per {c |} {res}  1.0000 
+{txt}lagvacc_per2 {c |} {res}  0.9643   1.0000 
+         {txt}age {c |} {res}  0.2577   0.2499   1.0000 
+        {txt}week {c |} {res}  0.4394   0.3520   0.0000   1.0000 
+
+{com}. pwcorr age lagvacc_0_10 lagvacc_1~20 lagvacc_~100 week
+
+             {txt}{c |}      age lagva~10 lagva~20 lagv~100     week
+{hline 13}{c +}{hline 45}
+         age {c |} {res}  1.0000 
+{txt}lagvacc_0_10 {c |} {res} -0.1722   1.0000 
+{txt}lagvacc_1~20 {c |} {res}  0.0847  -0.0486   1.0000 
+{txt}lagvacc_~100 {c |} {res}  0.2290  -0.0673  -0.0507   1.0000 
+        {txt}week {c |} {res}  0.0000   0.3436   0.2565   0.4034   1.0000 
+
+{com}. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/lizzieriese/Desktop/S21/ECO375/Assignment 1/Assignment 1.0.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}20 Feb 2021, 18:30:32
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
