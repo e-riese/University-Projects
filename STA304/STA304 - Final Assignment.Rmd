@@ -1,0 +1,544 @@
+---
+title: Using Difference-in-Differences Analysis to Identify the Effects of Vermont's
+  2019 'No-Limits Abortion' Bill H.57  on Women’s Education Attainment
+author: "Elizabeth Riese - 1003016122"
+date: "June 18, 2021"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(openintro)
+library(tidyverse)
+library(ggplot2)
+library(wesanderson)
+
+```
+
+
+
+# Abstract
+
+The effect of access to abortion on women's educational attainment is the primary research goal of this report. A difference-in-differences method is used on the educational attainment of women in Vermont to demonstrate this relationship. Vermont's 2019 'no-limit' abortion bill H.57 was used as the 'treatment' while the control chosen was the state of Oregon since it had very similar abortion laws prior to the bill. The time frame of the analysis is approximately one year before and after the enactment of the bill, from 2018 to 2019. The specific data used was from the American Community Survey conducted by the United States Census Bureau.  The results showed that there was a statistically significant shift over one year where more women in different age groups were graduating from high-school and tertiary education. This report concludes that this change was attributed to bill H.57. This provides further evidence for establishing the causal relationship between access to abortion and education attainment. Further studies to ensure the validity of these results could be to compare other states with similar abortion access laws to Vermont, that still lack any bill similar to bill H.57.
+
+# Introduction
+
+## Research Goal & Importance of Study
+
+The goal of the analysis will be to investigate if bill H.57 i.e. the 'No-Limits Abortion Bill' passed in Vermont has had an effect on women’s education attainment, and subsequently provide further evidence of the overall effect of abortion access on women's educational attainment. 
+
+In February 2019 Vermont passed bill H.57, which makes it significantly easier for women to have an abortion i.e. terminating a pregnancy by removing the embryo or fetus. It has colloquially been dubbed the ‘No-Limits Abortion Bill’. The bill was proposed as a safety precaution that would ensure fair access to abortions even if the United States Supreme Court decided to overturn the 1973 Row vs. Wade decision (Richardson, 2019). Roe vs. Wade was a historical case as it affirmed that access to safe and legal abortion is a constitutional right in the United States (Planned Parenthood, 2019). In other words, the bill ensures abortion access within the state despite restrictions that may be imposed at the higher federal level. 
+
+Women’s Rights in the United States were challenged in 2019 that same year by the proposal of tightening abortion laws, and in some cases complete prohibiting of abortion altogether. This severely restricts the reproductive freedoms and access to fair healthcare for many people, which in some cases can be potentially be life threatening. For a dominant global ‘superpower’ nation, the culture and influence spreads far and wide globally. These laws may detriment the lives of hundreds of millions of people within the United States, but they may also have the potential to shift views of those in other countries.
+
+## Current Literature on the Effects of Abortion on Education
+
+In one economic doctoral thesis by Sara Borelli from the University of Illinois (Borelli 2011), her research concludes that women in restrictive abortion environments are more likely to have more children as a young adult. These women also tend to lead to lower educational attainment, and these environments significantly decrease the probability of a woman completing high-school. It is also concluded that one of the most impactful types of laws causing this are those which restrict abortion access to minors. 
+
+Another related and well researched relationship exists between educational attainment and pregnancy outcomes. This research is well summarized in a paper by Mohr, Rebekah, et al. 2019. They ascertain that higher levels of education deters teenage pregnancy in low and lower-middle income countries. Although this is not directly studying abortion, it does show that there are observable relationships between education and fertility. Therefore, it wouldn't be unreasonable to presume or investigate into the relationship between abortion and education attainment.  
+
+Given the research found in these academic papers it would seem that what would be expected here is that bill H.57 improves the educational attainment of women in Vermont. In the context of this study specifically, a reasonable prediction is that there should be some sort of indication that more women are completing high school or achieving a bachelor's degree or higher. 
+
+## Outline of Data and Methodology
+
+A difference-in-differences approach will be implemented with focus on the proportions of different levels of educational attainment. A difference-in-differences approach models a randomized controlled experiment with observational panel data. Data from two similar observed groups are compared overtime such that one has had a certain 'treatment' that the other has not. The logic being that the difference over time between the similar groups must therefore only be attributed to the 'treatment'. The said observed difference can then be treated as the causal effect of the 'treatment' on the group. The group with treatment is called the treatment group and the other with no treatment is called the control group.
+
+Data from the United States Census Bureau will be used to obtain values for women's education attainment. The census estimates from respective states will be used as sample estimates for the greater population of said states. As stated, a control group is required for the difference-in-differences approach. The state of Oregon was chosen because it had similar abortion laws as Vermont. Only bill H.57 subverting possible federal restrictions is significantly different between the two states in this respect, which makes it a perfect candidate as a control group. More specific similarities between their legislature are described in the following data section of this report. Educational attainment is defined by the response levels given in the United States Census Bureau Survey, i.e. no high-school completion, completion of high-school and completion of a bachelor's degree or higher. The analysis will use data from the start of 2018 through to the end of 2019 as an approximate plus/minus one year difference from the Feb 2019 bill enactment. Although the COVID-19 pandemic is very likely to have had an effect on total education attainment overall, the severity of the pandemic had only begun in December 2019 and mostly at the beginning of 2020, which is already essentially the end of 2019. Therefore, the event should not significantly skew any of the data. Because fertility is biologically limited to certain ages groups, the age groups used in the analysis are limited to 18-24 and 25-34.
+
+## Research Hypothesis
+
+The brief introduction of our data forms the foundation for this report's hypothesis, that being; has the bill H.57 affected the proportions of education attainment (specifically no high-school, completion of high-school and bachelors or above) of women aged 18 to 34 in Vermont over 2019 since its enactment? This report is divided into the following sections; a description of the data's nature, sources and context, an introduction to the difference-in-differences methodology used to investigate this topic, a results section of the difference-in-differences analysis and a conclusion which examines the results in a real world context as well as its limitations. 
+
+
+# Data
+
+## Data Collection Process
+
+The data used for this analysis is from the United States Census Bureau, specifically from their annual American Community Survey for the years 2018 and 2019 (United States Census Bureau, 2019). The data was constructed by using a series of monthly samples from smaller regions within counties to create estimates for the state. The weighting and estimation methods used by the bureau are statistically quite complex as they implemented many forms of stratification and phases of sampling. They are described thoroughly in the 'American Community Survey Design and Methodology - January 2014' Document available on their website (U.S. Census Bureau, 2018, Chapter 4). The bureau used a combination of methods for obtaining responses. First they would mail out physical letters to households asking them to respond via the internet. They would then follow up with computer assisted telephone interviewing (CATI) if a telephone number was given. If a household would refuse to participate then they would follow up once more with computer-assisted personal interviewing (CAPI). CATI and CAPI are similar to regular surveying over the phone and in person. The only difference is that a computer system is used with software that guides the questions such that the surveyor only needs to input responses and the computer software works to skip redundant questions (U.S. Census Bureau, 2018). A combination of these techniques over a 6 month process lead to the final estimates found in the surveys. This process is also explained in greater detail in the 'American Community Survey Design and Methodology - January 2014' Document available on their website (page 76 - 89). There were over 30,000 respondents alone for each age group in the female education category, so the scale of the respondents should accurately represent the population. 
+
+## Choice of Control Group
+
+The difference-in-differences approach relies on the parallel-trend assumption. This assumption assumes that the control group should provide a realistic counterfactual of the trend that the treated group would have followed if it weren't for the 'treatment'. In this case, that would be mean that we are assuming the data for Oregon is what would have been the case for Vermont had they not passed bill H.57.
+
+Many states have legislative hurdles so to speak which makes access to abortion more difficult for people. These may include: requiring counselling before an abortion, requiring an ultrasound before an abortion, restrictions on funding or insurance restrictions, restrictions on abortion for minors, restrictions before being deemed viable for an abortion or restrictions based off of how far along the pregnancy is. Vermont had none of these legislative hurdles before bill H.57, so the chosen control group would require similar legislation to provide fair results. Oregon similarly has none of the restrictive legislature mentioned yet did not make any headway in passing a bill similar to that of H.57, which could subvert federal ruling on abortion (Kaia Hubbard 2021, Vermont General Assembly 2019). Therefore, it was deemed an appropriate candidate as a control group.
+
+
+## Limitations of Data
+
+The data collection process was overall very thorough, and was led by teams of expert statisticians working full time for the United States Government. The data is an estimate for the greater population of different states, which does call into the question of its absolute accuracy. However, with the natural limitations of surveying large populations and the high level of accurate statistical data manipulation by experts, this would account for most errors. It would be reasonable to assume that this data is quite reliable overall.
+
+The data for Oregon has higher values overall than Vermont, because it is significantly larger population wise. This would lead to some bias in the data with most types of statistical analysis. However, since we are addressing the proportions of educational attainment changing, in conjunction with the difference-in-differences approach this population size difference should not skew the results.
+
+It is likely that there are significant differences between Vermont and Oregon which may also affect women's educational attainment. It is certainly possible that there are underlying correlations unique to each state which may also affect educational attainment. A significant factor would be income, however the average income of a person from Vermont and Oregon is quite similar at approximately $63,000 U.S. dollars a year (United States Census Bureau, 2018). The difference-in-differences approach attempts to take this into account through a heavy reliance on the parallel-trends assumption. Given the many possibilities of lurking variables it is evident that this is quite a large assumption to make. For a further study one could carefully examine different possible factors to see if there are any significant ones that stand to skew the results. 
+
+## Cleaning the Data
+
+The data from the American Community Survey is very large and includes information on a variety of different topics. The online interactive table was used to isolate the relevant data with 'Education' and its subsequent 'Education Attainment Variable' selected. 'Populations and People' were also selected and its subsequent group 'Age and Sex'. This brought up the data for education attainment, age and sex for each respective state, which was then downloaded into a csv file. Within this subset of data there were still about 100 variables describing the different educational attainments, ages and sex in all fifty states. Firstly the education attainment, age and sex data for Vermont and Oregon was isolated in Excel and cut and pasted into a new spreadsheet. When downloading the data, a spreadsheet describing the codes and variable names is also attached in a zip file. This was used to identify the necessary estimates for education attainment, age and sex data for the report. 
+
+The specific variables that were used were; female age by educational attainment, population age 18 to 24 (for total, less than high-school attainment, high-school graduate, some college or associate's degree, and bachelor's degree or higher, respectively) and female age by educational attainment, population age 25 to 34 (for total, high-school graduate or higher, and bachelor's degree or higher, respectively). For some reason these two age groups had different measures for educational attainment, but the latter group was adjusted to create groups that were more similar to the former.
+
+The 'high-school graduate or higher' estimates are inclusive of those in the bachelor's degree or higher category for the female population aged 25-34. The difference between the 'total females aged 25 to 34' and the 'high-school graduate or higher' category was then used as the 'females aged 25 to 24 with less than high-school education'. The difference between the' high-school graduate or higher' category and the 'bachelor's degree or higher' group was used as 'females aged 25 to 24 with a high-school education only'. Using the totals for each age group, the proportions of each educational attainment were calculated. These proportions were the values that underwent the difference-in-differences analysis. This data cleaning process and proportion calculations can also be found in the attached csv that goes with this report in the 'Raw Data' spreadsheet. For reference, the exact table codes of the variables used were 'S1501_C05_001' to 'S1501_C05_005' and 'S1501_C05_016 to S1501_C05_018'. A summary of these values can be found in Table 1. This process was done for both the 2018 and the 2019 data.
+
+## Important Variables & Numerical Summaries
+  
+  
+### **Table 1 - Summary of Education Attainment Variables Taken from American Community Survey**  
+  
+```{r, echo = FALSE}
+
+# Cleaning process was mainly done in Excel by just cutting and pasting the necessary columns and rows into a new spreadsheet. That csv file is attached to this submission with the spreadsheet labeled as 'Table 1' and 'Table 2'. 
+
+# Raw data is uploaded and displayed as table 1, has the necessary values coming straight off of the census bureau csv just isolated without the other hundreds of variables
+
+# Processed data has the new variables I created with proportions, which was just subtracting certain values from totals and dividing from totals respectively, detailed explanation is in appendix. These values can be seen in table 2, calculations can be found in excel spread sheet csv that comes with submission.
+
+# I re-uploaded these into R and created a new data frame with both.
+
+library(readxl)
+library(dplyr)
+library(knitr)
+library(kableExtra)
+df <- read_excel("~/Desktop/STA304_Data.xlsx", sheet = "Table 1", range = "A2:F18")
+
+# only edited the data upload so that the headings would be easier to manage in R
+
+df2 <- select(df, -1)
+# had an extra column with the detailed names which is useful in excel but makes formatting in R hard, so just deleted it here with select function
+  
+df2 %>%
+  # the data frame piped through kable function
+  
+  kable(col.names = c(" ", "2018", "2019","2018","2019"), 
+      caption = "Summary of education attainment variables used in this analysis as found in original dataset from American Community Surveys 2018 and 2019 for Vermont and Oregon data. Consists of totals and subtotals in specific education attainment categories.", format = "latex") %>%
+  # piped through kable function, added column names and a caption
+  
+  kable_paper("hover", html_font = "Helvetica") %>%
+  kable_styling(full_width=F,bootstrap_options = c("striped", "hover","condensed"),latex_options=c("hold_position", "scale_down"), position = "center") %>%
+  # piping it through style options, should change color when mouse hovers over different rows
+  
+  row_spec(row = 0, color = "white", background = "#D7261E") %>%
+  # giving the heading row colour and extra stuff
+  
+  add_header_above(c(" " = 1, "Oregon" = 2, "Vermont" = 2),color = "white", background = "#669999" ) %>%
+  # grouping it by state so it's easier to read
+  
+  pack_rows("Female Population Age 18 - 24", 1, 10, color = "white", background = "#899DA4") %>%
+  pack_rows("Female Population Age 25 - 34", 11, 16,color = "white", background = "#899DA4") %>%
+  # group data by age so it's easier to read also
+  
+  column_spec(4:5, background = "#FF7276") %>%
+  # customizing the treatment group so it's easier to see
+  
+  footnote(general = "Margin of Error values are the plus/minus range corresponding to the respective values directly above. Values for the treatment group Vermont are highlighted in red.", footnote_as_chunk = TRUE,threeparttable = TRUE)
+  # just adding some footnotes about the table layout for clarity
+```
+
+
+Table 1 shows the key numeric totals for education attainment across different levels. These values were taken directly from the American Community Survey. Values for Vermont, the treatment group, are highlighted in red and the values for the control group Oregon are not. The 'Margin of Error' is the plus minus estimate from the survey of the total values in each category. Each margin of error value corresponds to the numeric value directly above it. The top group of variables correspond to the female populations aged 18 to 24 and the bottom group of variables to the female population aged 25 to 34. As a reminder, these age group were chosen since this is generally considered to be the age frames when women have children.
+
+At a glance, it seems that the values from 2018 and 2019 did not change significantly for either Vermont or Oregon. Most of the estimated values only shifted by a thousand or so, which in terms of values that are in the tens of thousands, only represents about small change. The margin of error values overall were quite small relative to the scale of the analysis, so that would suggest that the estimates are relatively precise.
+
+As one can see, the variables for ages 25 to 34 are slightly different to those of the age group 18 to 24 for some reason I assume known only to the surveyors. This is not ideal for representing education attainment as proportions of the total. This is because the levels of educational attainment are not mutually exclusive and over lap, e.g. those in the 'Bachlor's Degree or Higher' category are also necessarily in the 'High School Graduate or Higher' category. This means their proportion of the total value presented in Table 1 does not sum to one and will necessarily be greater than one. To circumnavigate this issue, new variables were formed using these variables such that they would be essentially the same as the variables from the population age group of 18 to 24. 'No High School' is equal to the total less 'High School Graduate or Higher'. 'High School Graduate' is equal to 'High School Graduate or Higher' less 'Bachlor's Degree or Higher' and 'Bachlor's Degree or Higher' is the same as it was. This process was described in the data cleaning process also, and is more clearly demonstrated in Table 2 and its descriptions. The age group of 18 to 24 did not have this issue as all the educational attainment groups were mutually exclusive.
+
+
+\newpage
+
+### **Table 2 - Proportions of Education Attainment Variables Relative to the Totals in Age Groups with Mutually Exclusive Variables for Age Group 24 - 35**  
+  
+```{r, echo=FALSE}
+# table 2 code
+library(readxl)
+df3 <- read_excel("~/Desktop/STA304_Data.xlsx", sheet = "Table 2")
+df4 <- select(df3, -1)
+
+df4 %>%
+  # the data frame piped through kable function
+  
+  kbl(digits = 2,
+      col.names = c(" ", "2018 Total", "2019 Total","Total Difference Between 2018 & 2019","2018 as a Proportion", "2019 as a Proportion","2018 Total", "2019 Total","Total Difference Between 2018 & 2019","2018 as a Proportion", "2019 as a Proportion"), 
+      # naming the columns, table headers
+      
+      caption = "This table shows the final variables that will be used in the analysis. The proportions of the levels of education attainemnt for each age group are shown. They are calculated using values from Table 1. Totals for 2018 and 2019 are shown again to demonstrate where the total difference between 2018 and 2019 values came from. The new variables that are now mutually exclusive are created for the age group 25 to 34 (i.e. 'No High School', 'High School Graduate', and 'Bachelor's Degree of Higher').",
+      # caption for the table
+      
+      format = "latex",
+      # piped through kable function, also using the latex formatting
+      align = "c") %>%
+      # aligning the table centre
+  
+  kable_paper("hover",html_font = "Helvetica") %>%
+  kable_styling(full_width=F,
+                
+                bootstrap_options = c("striped", "hover","condensed"),
+                
+                latex_options=c("hold_position", "scale_down"), 
+                
+                position = "center") %>%
+  # piping it through style options, should change color when mouse hovers over different rows
+  
+  row_spec(row = 0, color = "white", background = "#5576D1") %>%
+  # giving the heading row colour and extra stuff
+  
+  add_header_above(c(" " = 1, "Oregon" = 5, "Vermont" = 5),color = "white", background = "#669999" ) %>%
+  # grouping it by state so it's easier to read
+  
+  pack_rows("Female Population Age 18 - 24", 1, 5, color = "white", background = "#899DA4") %>%
+  pack_rows("Female Population Age 25 - 34", 6, 9,color = "white", background = "#899DA4") %>%
+  # group data by age so it's easier to read also
+  
+  column_spec(5:6, bold = T) %>%
+  column_spec(10:11, bold = T) %>%
+  # bolding the proportion values
+  
+  column_spec(1, width = "6em") %>%
+  column_spec(2:3, width = "3em") %>%
+  column_spec(4, width = "5em") %>%
+  column_spec(5:6, width = "5em") %>%
+  # adjusting the column lengths
+  
+  column_spec(7:8, background = "#C9E3FF", width = "3em") %>%
+  column_spec(9, background = "#C9E3FF", width = "5em") %>%
+  column_spec(10:11, background = "#C9E3FF", width = "5em") %>%
+  # customizing the treatment group so it's easier to see
+  
+  footnote(general = "New variables for age group 24-35 are calculated using the variables given in Table 1 for the same said age group. Values for the treatment group Vermont are highlighted in blue. Proportion values are in bold.", footnote_as_chunk = TRUE,threeparttable = TRUE) 
+  # just adding some footnotes about the table layout for clarity
+
+```
+
+Table 2 presents the proportion of the population in each respective age group that will be used for the difference-in-differences analysis. These values are bolded for clarity. One may note that already there isn't much change in the proportion for the control group of Oregon over 2018 and 2019. The greatest change is only two percent seen in the high school graduates groups in the age group 25 to 34. This provides some evidence that the education attainment wasn't heavily skewed by any other factors over that year. The totals of course as a percentage of themselves is equal to one which is why the proportion values for those columns are all equal to one. One can also note that the proportions of each age group do sum to one as expected. These proportion variables should lay a good foundation for clearly observing the change in the levels of educational attainment over 2018 and 2019. Shifts in the values are expected to be observed, some may increase and some may decrease.
+
+The absolute total difference between 2018 and 2019 is also shown in the table. This is to give an indication to the change in demographic of the age groups. Looking at the difference in just the totals column of Oregon (the control group), it seems there was a slight decrease overall in the number of women in the age groups (-7 and -43 respectively). These values are very small relative to the totals; representing less than one percent of the total. Thus it is likely that this is just due to random error and that the population groups did not shift greatly. If the values changed drastically over the time frame this could have skewed the results. It also may have indicated that other factors were severely affecting women's educational attainment in Oregon over 2018 and 2019. It can be seen that these differences in Vermont are quite larger than Oregon. This means Vermont's totals changed more than Oregon. This would indicate that we would expect significant differences between educational attainment in Vermont and Oregon in the analysis. However, we must fully perform the difference-in-differences analysis to be sure.
+
+
+
+#### **Figure 1 - Bar Chart of the Total Differences Over 2018 and 2019 in Educational Attainment Levels for Vermont and Oregon**  
+  
+
+```{r, echo = FALSE,fig.align="center"}
+# plot 1 code
+library(readxl)
+dfr1 <- read_excel("~/Desktop/STA304_Data.xlsx", sheet = "Plot 1")
+# used spread sheets in excel to create the data frame
+
+library(wesanderson)
+library(stringr)
+plot1 <- dfr1 %>%
+  ggplot +
+  aes(fill = `State`, x = `Educational Attainment`, y = `Total Difference from 2018 to 2019`)+
+  geom_col(position = 'dodge')+ 
+  theme(axis.text.x = element_text(face = "bold", color = "black", 
+                           size = 8, angle = 0, hjust = 1),
+        axis.text.y = element_text(face = "bold", color = "black", 
+                           size = 8),
+        axis.ticks.x = element_blank(),
+        plot.caption = element_text(hjust = 0)
+        )+
+  
+        scale_x_discrete(breaks=c("Bachelor's Degree or Higher","High School Graduate","No High School", "Some College or Associate's Degree", "Total"), labels=c("Bachelor's \n Degree \n or Higher", "High \n School\n Graduate", "No \n High \n School","Some \n College or \n Associate's \n Degree","Total")
+    )+
+
+  scale_fill_manual(values = wes_palette("Moonrise3",4,type = "discrete"))+   
+  # Isle of Dogs and Moorise Kingdm were really great movies. Not all of WesAnderson's stuff is great, but those ones got to me. The Royal Tenenbaums is overhyped.
+
+  geom_hline(yintercept = 0,)+
+  theme_minimal()+
+  labs(
+  caption = str_wrap("The different colored bars represent the different states and age groups (shown in legend). The groupings of the bars represent the educational attainment levels (shown at bottom of axis). There are only two bars for the some college and associate's degree category because this data was only available for one age group."
+))
+
+plot1
+
+
+```
+
+The bar chart shows both the positive and negative changes in the total values of each respective educational attainment level for both Vermont and Oregon over 2018 and 2019. It seems that Oregon had a large shifts in the number of high school graduates aged 25 to 34. It seems that number of people who did not complete high school decreased and the number of people who did increased. This would just that many people in that age group completed some sort of high school equivalent such as the GED. The GED is a Higher Secondary Certificate equivalent to a high school diploma intended for adults to obtain high school qualifications if they did not manage to as a youth. 
+
+All analysis for this report was programmed using `R version 4.0.4` and spreadsheet in Excel Version 16.49.
+
+
+\newpage
+
+# Methods
+
+## Difference-in-Differences
+
+The methodology used in this analysis is difference-in-differences, which will be performed on the proportions of female education attainment levels across 2018 and 2019. The difference-in-differences approach aims to achieve the causal results of a randomized control trial experiment using observational data. This is done by choosing two groups of observational data that are considered to be all else equal apart from a stimulus or treatment that only one of the groups experiences. Thusly, there is one group with treatment and one without, i.e. the treatment group and the control group. The logic is that the only difference over time between the two groups must then be attributed to the treatment and the treatment alone, therefore establishing the causal link between the treatment and the change. This method is best used with observational panel data and is most useful for establishing causal relations, whereas most other methods for handling observational data may only establish correlative ones.
+
+The process begins with finding the change in the variable in question over the time frame in question for the treatment group and the control group respectively. In the context of this analysis this would mean comparing the change in the proportion of females in each education level from 2018 to 2019 for Vermont and then doing the same for Oregon. The next step in the difference-in-differences approach is to find the difference between the difference of the control group and the difference of the treatment group, hence the name difference-in-differences. In this report this really means finding the difference between Vermont and Oregon's respective changes in each education attainment group from 2018 to 2019. This difference between the two should be representative of the proportion of the change in female education attainment due to bill H.57.
+
+This method is useful because it allows both the treatment and control group to start at different absolute levels. This is because only the changes between the two groups is what is being compared. It also factors in the changes due to other possible variables, not just the treatment.
+
+## Assumptions of Difference-in-Differences
+
+The main assumption of the difference-in-differences approach is the parallel trend assumption as stated earlier. This assumption assumes that the difference between both observed groups would have been constant given that there were no treatment. There is no rigorous statistical test for this assumption, but if there were many points over time it may be deemed visually from a time series plot. For the parallel trend assumption to hold one would observe the plotted trend lines of both groups to move in parallel with deviation only occurring at the point of treatment. A violation of this assumption leads to a biased estimation of any causal effect. It is assumed that parallel trends holds in this analysis.
+
+Another key assumption is that the composition of the groups being studied are stable over the time period of observation. This would be true for Vermont and Oregon as we are only looking across 2018 and 2019. The composition of the groups over one year would likely be stable, so it would be appropriate to say that this assumption holds. When performing the difference-in-differences analysis it also appears that the proportions of educational attainment in the control group Oregon don't seem to change much over 2018 and 2019 in the same way Vermont does change (see tables from data section). This would further suggest that the composition of the groups are not changing by much. There is the point to consider of population age groups changing naturally over the course of one year i.e. people move from one age group to the other. However, since the time frame is only one year this difference would be marginal compared to that of say five to ten years which would like drastically change the proportions in each age group.
+
+It is also assumed that the 'amount' of treatment, in this case bill H.57, is not determined by the outcome, in this case educational attainment. That simply would not make sense, as educational attainment should not affect whether or not the state government decided to enact the bill or not. It also appears like the main push for the bill was due to discussions on the abolishment of the Row vs. Wade verdict, making it a defensive way to keep abortion rights within the state intact (Richardson, 2019). Therefore, it is safe to say that this assumption also holds.
+
+## Parameters of Interest - Changes in Proportions from 2018 to 2019
+**Note: Figures referred to in this section can be found in Table 1 and Table 2** 
+
+Proportions of education attainment were used to demonstrate the change in the levels education attainment. Proportions were used instead of absolute values so that the total number of women changing in each age group wouldn't skew the results. The population of Oregon is also much larger than Vermont so proportions also take this into account. The exact total number of women in the Oregon age groups were approximately 179,000 for 18 to 24, and approximately 290,000 for ages 25 to 34 over 2018 to 2019. The exact total number of women in the Vermont age groups were approximately 32,000 for 18 to 24, and approximately 37,000 for ages 25 to 34 over 2018 to 2019. The population estimate margin of errors are summarized in Table 1 and the totals values can be seen there also. It does not appear that any of them are significantly large relative to the totals, so it is unlikely the results are inaccurate.
+
+It seems that in Oregon and Vermont about half of women aged 18 to 24 have completed some college or associate's degree in both 2018 and 2019. Of this same group only around 12% have completed a bachelor's degree or higher, and 30% have completed high school (See Table 2). These proportions are generally much higher for the age group 25 to 34 which is likely due to people having more time to complete their education. This is also may be because of the way the variables are described. This age group excludes the community college and associates degree category, which means anyone who would have been in that category is automatically put into the high school graduate category. It seems then that the modal level of educational attainment would be community college or an associate's degree in both states for ages 18 to 24, but for ages 25 to 34 it would be high school attainment. If the data set had provided information on community college or an associates degree for the ages 25 to 34, then it is possible that this would be the modal education attainment level for that group.
+
+# Results 
+
+## Results of Methodologies
+
+Table 3 presents the results from the difference-in-differences analyses. It would seem for both age groups there were significant differences, as well as notable changes in each respective education attainment group. For the age group 18 to 24, there was a proportion shift such that 2% less of the women were of the no high school group, and 5% less were of the community college and associate's degree group. It would appear that these were redistributed to the high school graduate group and the bachelor's degree or higher group, as each increased by 4%. To summarize, the analysis calculates that there is a 4% increase in high school graduates and a 4% increase in bachelor's degree attainment or higher for those aged 18 to 24. The percentages have been rounded to two decimal places which is why they are 1% off when comparing the redistributed proportional weights. For the age group 25 to 34, there was similarly a proportional shift such that 5% less of the women were in the no high school group. It seems this was redistributed to the high school graduate level and bachelor's or higher level by 1% and 3% respectively.
+
+```{r, echo = FALSE}
+# table 3
+# I ran all the difference-in-differences analysis in Excel when copy and pasting the variables I needed since the calculations are quite simple. Didn't really see the point of repeating that here so I just uploaded the data table from the spreadsheet.
+
+library(readxl)
+frame1 <- read_excel("~/Desktop/STA304_Data.xlsx", sheet = "Table 3")
+
+# this just gets the proportion and difference-in-differences values
+library(kableExtra)
+
+frame1 %>%
+  kable(digits = 2, col.names = c(" ", "Less than High School Attainment", "High School Graduate (Includes Equivalency)","Some College or Associate's Degree","Bachelor's Degree or Higher","No High School","High School Graduate","Bachelor's Degree or Higher"),
+      # heading titles
+      
+      caption = "Summary of difference-in-differences analysis. Proportions of each education attainemnt level are given for each state and each year respectively. The difference over 2018 and 2019 are shown for each state. The difference between these differences is then presented as the last row in the table.", 
+      # caption for the table
+      
+      format = "latex", align = "c") %>%
+      # I think this helps
+
+  kable_paper("hover", html_font = "Helvetica") %>%
+  kable_styling(full_width=F, bootstrap_options = c("striped", "hover","condensed"), latex_options=c("hold_position", "scale_down"), position = "center") %>%
+  # piping it through style options, should change color when mouse hovers over different rows
+
+  column_spec(3:6, bold = T) %>%
+  # bolding the 'difference' values over 2018 and 2019 for each state
+  
+  column_spec(1, width = "6em") %>%
+  column_spec(2:8, width = "5em") %>%
+  # adjusting the column lengths
+
+  row_spec(7, background = "#FFC63A") %>%
+  # customizing the "in-differences" part so can see it clearly, bottom row highlight
+
+  pack_rows("Oregon", 1,3, color = "white", background = "#899DA4") %>%
+  pack_rows("Vermont", 4,6,color = "white", background = "#899DA4") %>%
+  pack_rows("Difference-in-Differences",7,7,color = "white", background = "#899DA4") %>%
+  # group data by STATE so it's easier to read also
+  
+  row_spec(row = 0, color = "white", background = "#FFC63A",bold = TRUE) %>%
+  # giving the heading row colour and extra stuff
+  
+  row_spec(row = 3, color = "black", background = "#FFF9EB") %>%
+  row_spec(row = 6, color = "black", background = "#FFF9EB") %>%
+  
+  add_header_above(c(" " = 1, "Female Population 18 to 24" = 4, "Female Population 25 to 34" = 3), color = "white", background = "#669999",bold = TRUE )
+  # grouping it by state so it's easier to read
+```
+
+## Interpretation & Appropriateness of Results
+
+The results suggest that in Vermont less women are within the educational attainment level of no high school, and had completed more high school or higher in 2019 than in 2018 compared to that of the changes seen in Oregon. A likely explanation is that the number of women no longer falling into the community college or associates degree category would have been shifted to the bachelor's degree or higher category. This should be due to the new bill H.57 given the design of the analysis. It is likely to have given women in Vermont more freedom to readily access abortion if needed, and therefore continue their education without risk of an unwanted pregnancy. 
+
+The design of the analysis leads one to the conclusion that the changes in educational attainment are causally attributed - with the assumptions of difference-in-differences analysis met - to bill H.57. It seems that as the previously mentioned literature (Borelli 2011) suggests, making abortion access more easily available would have a positive effect on women's educational attainment. This relationship was what was similarly found in this report which would lead one to believe that the results are realistically representing the true relationship between the two.
+
+It also makes sense that the proportional changes are quite small. To begin with both Vermont and Oregon had made abortions easily accessible. They are also two relatively prosperous parts of the world that have good education and health care systems overall, meaning that significant amounts of the population are likely to be educated. It would be expected that with even with this new law imposed that it would change things marginally. The size of the changes would probably be much larger if the bill was enacted in an area with very strict abortion laws that prevent women from having abortions, such as Alabama. 
+
+\newpage
+
+#### **Figure 2 - Bar Chart of the Results of the Difference-in-Differences Analysis Over 2018 and 2019 in Proportions of Population for Different Educational Attainment Levels**  
+
+   
+```{r, echo = F}
+# plot 2, figure 2 
+
+library(readxl)
+frame2 <- read_excel("~/Desktop/STA304_Data.xlsx", sheet = "Plot 2", col_names = TRUE)
+
+library(wesanderson)
+library(stringr)
+library(ggplot2)
+plot2 <- ggplot(data = frame2, aes(x =`Education Attainment`, y=`Difference in Differences`, fill = `Age`))+
+  geom_col(position = 'dodge')+
+  theme_minimal()+
+  scale_fill_discrete(name = "Age Group", labels = str_wrap(c("Female Population \n 18 to 24", "Female Population \n 25 to 34")))+
+  scale_x_discrete(breaks=c("Bachelor's Degree or Higher","High School Graduate","No High School", "Some College or Associate's Degree", "Total"), labels=c("Bachelor's \n Degree \n or Higher", "High \n School\n Graduate", "No \n High \n School","Some \n College or \n Associate's \n Degree","Total"))+
+  geom_hline(yintercept = 0,)+
+  scale_fill_manual(values = wes_palette("GrandBudapest2", 2,type = "discrete"))+  
+  # GrandBudapest was great too, but people really have to stop overhyping it also. Darjeeling limited really got to me. I think anyone with siblings would really feel that movie. 
+  labs(
+  caption = str_wrap("The different colored bars represent the different age groups (shown in legend). The groupings of the bars represent the educational attainment levels (shown at bottom of axis). There is only one age group for the some college and associate's degree category because this data was only available for one group."
+))+ 
+  theme(axis.text.x = element_text(face = "bold", color = "black", 
+                           size = 8, angle = 0, hjust = 1),
+        axis.text.y = element_text(face = "bold", color = "black", 
+                           size = 8),
+        axis.ticks.x = element_blank(),
+        plot.caption = element_text(hjust = 0)
+        )
+
+plot2
+```
+
+Figure 2 shows a visual representation of the results of the difference-in-differences seen in Table 3. A clear decrease can be observed in the number of females from both age categories for those having no high school. For the college or associate's degree this also decreased for the age group 18 to 24 (data was missing for other age group). It is likely then that the increase in those completing high school and a bachelor's degree is due to these decreases. In other words, rather than not finishing high school, women are finishing it. Rather than doing an associate's degree women are completing their bachelor's degree. 
+
+
+# Conclusions
+
+## Key Results
+
+The original purpose of this report was to investigate if access to abortion has as effect on educational attainment. This was investigated specifically by looking into bill H.57 passed in Vermont which protects access to abortion despite changes in federal laws on the topic. A difference-in-differences analysis was implemented on education attainment levels in Vermont with Oregon treated as a control group. It was found that there was a statistically significant changes in the proportion of different educational groups. Primarily it seemed that the population had significantly shifted from no high school attainment to high school graduates or higher in both age groups. This findings of this report have thusly provided greater evidence that greater access to abortion leads to higher educational attainment for women, at least in terms of high school graduates.
+
+\newpage
+
+## Limitations of Study
+
+Although the results seem to adhere to what current literature on abortion suggest, this analysis was not robust. Only one significant variable was observed and analyzed with other controls and factors not particularly taken into account. This is technically supposed to be controlled and accounted for in the difference-in-differences approach. However, for a truly thorough understanding of the relationship between abortion access and educational attainment, similar data and situations should be looked into to see if the same results hold. The assumptions made for the difference-in-differences analysis were quite bold. However, given that the educational attainment levels and proportions did not change significantly for the control group Oregon from 2018 to 2019, it would seem reasonable to assume the main assumptions of difference-in-differences should hold. 
+
+## Next Steps & Discussion
+
+It would be worth while to try a similar analysis on other states that may have similar laws to see if the results hold true. There are other states with abortion laws similar to Vermont and Oregon so one could repeat this analysis using those to test the robustness of the results. Another possible take would be to analyze states with strict abortion laws similarly, to see if the magnitude of the change is greater, or if similar trends even hold at all. 
+
+Although the results of this study are in many quantitively based in an economic context, it is also important to remember the ethical reasons behind this topic also. Regardless of the economic gain of higher educational attainment the choices and health and safety of individuals is always imperative to making decisions on such laws. Hopefully other states have the foresight to take both of these into account when addressing new legislature on abortion access.
+
+\newpage
+
+# Bibliography
+
+Allaire, J.J., et. el. *References: Introduction to R Markdown*. RStudio. [https://rmarkdown.rstudio.com/docs/](https://rmarkdown.rstudio.com/docs/). (Last Accessed: January 15, 2021) 
+
+Borelli, Sara. Essays on Economic Aspects of Abortion in the United States, University of Illinois at Chicago, Ann Arbor, 2011. ProQuest, http://myaccess.library.utoronto.ca/login?qurl=https%3A%2F%2Fwww.proquest.com%2Fdissertations-theses%2Fessays-on-economic-aspects-abortion-united-states%2Fdocview%2F904572422%2Fse-2%3Faccountid%3D14771. 
+
+Cao, Zhun et al. Difference-in-Difference and Instrumental Variabels Approaches. An alternative and complement to propensity score matching in estimating treatment effects.CER Issue Brief: 2011. 
+Kaia Hubbard. “A Guide to Abortion Laws by State.” US News & World Report, U.S. News & World Report, 29 Apr. 2021, www.usnews.com/news/best-states/articles/a-guide-to-abortion-laws-by-state. Accessed 13 June 2021.
+
+Dekking, F. M., et al. (2005) *A Modern Introduction to Probability and Statistics: Understanding why and how.* Springer Science & Business Media.
+
+Grolemund, G. (2014, July 16) *Introduction to R Markdown*. RStudio. [https://rmarkdown.rstudio.com/articles_intro.html](https://rmarkdown.rstudio.com/articles_intro.html). (Last Accessed: January 15, 2021) 
+
+Mohr, Rebekah, et al. “The Influence of Educational Attainment on Teenage Pregnancy in Low-Income Countries: A Systematic Literature Review.” Journal of Social Work in the Global Community, vol. 4, no. 1, 17 Dec. 2019, 10.5590/jswgc.2019.04.1.02.
+
+Planned Parenthood. “Roe v. Wade: The Constitutional Right to Access Safe, Legal Abortion.” Planned Parenthood Action Fund, Planned Parenthood, 2019, www.plannedparenthoodaction.org/issues/abortion/roe-v-wade. Accessed 13 June 2021.
+
+Richardson, Valerie. “Vermont House Passes H. 57 No-Limits Abortion Bill.” The Washington Times, The Washington Times, 21 Feb. 2019, www.washingtontimes.com/news/2019/feb/21/vermont-house-passes-h-57-no-limits-abortion-bill/. Accessed 12 June 2021.
+
+Torrieri, Nancy, et al. “American Community Survey Design and Methodology (January 2014).” United States Department of Commerce, 30 Jan. 2014.
+
+United Nations. “United Nations Issues Study on Women’s Education and Fertility | Meetings Coverage and Press Releases.” United Nations Meetings Coverage and Press Releases, United Nations, 7 Feb. 1996, www.un.org/press/en/1996/19960207.dev2092.html. Accessed 13 June 2021.
+
+United States Census Bureau. “Educational Attainment - 2019: ACS 1-Year Estimates Subject Tables.” , vol. Table ID: S1501, 2019. American Community Survey 2019, data.census.gov/cedsci/table?q=educational%20attainment&t=Age%20and%20Sex&g=0100000US,.04000.001&tid=ACSST1Y2019.S1501&tp=true&hidePreview=true. Accessed 13 June 2021.
+
+---. “QuickFacts: Vermont.” Census Bureau QuickFacts, United States Census Bureau, 2018, www.census.gov/quickfacts/VT. Accessed 14 June 2021.
+
+US Census Bureau. “Design and Methodology Report.” United States Census Bureau, United States Department of Commerce, 18 June 2018, www.census.gov/programs-surveys/acs/methodology/design-and-methodology.html. Accessed 14 June 2021.
+
+Vermont General Assembly. “Bill Status H.57 (Act 47).” Vermont General Assembly, State of Vermont, 10 June 2019, legislature.vermont.gov/bill/status/2020/H.57. Accessed 13 June 2021.
+
+\newpage
+
+
+```{r, echo = FALSE}
+
+# Use this to create some plots.
+
+library(ggplot2)
+library(gridExtra)
+
+# first plot is pie chart of the 2018 Oregon educational attainment proportions for 
+
+df5 <- data.frame("Education Attainment" = df3$`Educational Attainment`,"Oregon Proportions 2018" = round(df4$`Oregon Proportions 2018`,2))
+df6 <- df5[-c(1,6:9),]
+
+# This just creates the necessary data frame for the pie chart
+
+pie1 <- ggplot(df6, aes(x="", y=`Oregon.Proportions.2018`, fill=`Education.Attainment`)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0) +
+  geom_text(aes(label = paste0(`Oregon.Proportions.2018`, "%")), position = position_stack(vjust=0.5), color="white",size = 1) +
+  labs(x = NULL, y = NULL) +
+  theme_classic() +
+  theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank()) +
+# That just all the main stuff to get the pie chart set up position, labels, variables and such
+  
+  guides(fill=guide_legend(title=""))+
+#  legend title; removed it because it seemed redundant
+  
+  ggtitle("Edcuation Attainment of Female Population \nAged 18 to 24 in Oregon 2018 as Percentages")+
+# chart title
+  
+  scale_fill_manual(labels=c("Bachelor's Degree or Higher", "High School Graduate (Includes Equivalency)","Less than High School Attainment","Some College or Associate's Degree"),values = c("coral", "coral1", "coral2", "coral3"))
+
+``` 
+
+```{r, echo = FALSE}
+library(ggplot2)
+# second plot is pie chart of the 2018 Oregon educational attainment proportions for 25-34
+
+df7 <- df5[-c(1:6),]
+# This just creates the necessary data frame for the pie chart
+
+pie2 <- ggplot(df7, aes(x="", y=`Oregon.Proportions.2018`, fill=`Education.Attainment`)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0) +
+  geom_text(aes(label = paste0(`Oregon.Proportions.2018`, "%")), position = position_stack(vjust=0.5), color="white",size = 4) +
+  labs(x = NULL, y = NULL) +
+  theme_classic() +
+  theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank()) +
+# That just all the main stuff to get the pie chart set up position, labels, variables and such
+  
+  guides(fill=guide_legend(title=""))+
+#  legend title; removed it because it seemed redundant
+  
+  ggtitle("Edcuation Attainment of Female Population \nAged 25 to 34 in Oregon 2018 as Percentages")+
+# chart title
+  
+  scale_fill_manual(labels=c("Bachelor's Degree or Higher", "High School Graduate (Includes Equivalency)","Less than High School Attainment","Some College or Associate's Degree"),values = c("coral", "coral1", "coral2"))
+# keeping color scheme the same
+
+
+``` 
+
+```{r, echo = FALSE}
+
+# Use this to create some plots.
+
+library(ggplot2)
+
+# first plot is pie chart of the 2018 Oregon educational attainment proportions for 
+
+df8 <- data.frame("Education Attainment" = df3$`Educational Attainment`,"Oregon Proportions 2019" = round(df4$`Oregon Proportions 2019`,2))
+df9 <- df8[-c(1,6:9),]
+
+# This just creates the necessary data frame for the pie chart
+
+pie3 <- ggplot(df9, aes(x="", y=`Oregon.Proportions.2019`, fill=`Education.Attainment`)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0) +
+  geom_text(aes(label = paste0(`Oregon.Proportions.2019`, "%")), position = position_stack(vjust=0.5), color="white",size = 4) +
+  labs(x = NULL, y = NULL) +
+  theme_classic() +
+  theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank()) +
+# That just all the main stuff to get the pie chart set up position, labels, variables and such
+  
+  guides(fill=guide_legend(title=""))+
+#  legend title; removed it because it seemed redundant
+  
+  ggtitle("Edcuation Attainment of Female Population \nAged 18 to 24 in Oregon 2019 as Percentages")+
+# chart title
+  
+  scale_fill_manual(labels=c("Bachelor's Degree or Higher", "High School Graduate (Includes Equivalency)","Less than High School Attainment","Some College or Associate's Degree"),values = c("chocolate1", "chocolate2", "chocolate3","chocolate4"))
+
+``` 
+
